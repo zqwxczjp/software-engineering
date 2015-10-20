@@ -1,0 +1,20 @@
+#coding:utf-8
+修改记录：
+-------------------------------------------------------
+2015/10/20 17：00
+1.修改setting.py
+	模板路径为，os.path.join(BASE_DIR, 'template')
+	修改时区为：Asia/Shanghai
+2.修改登录注册模板：SignUp.html  SignIn.html
+	css路径修改
+	SignUp.html输入类型改为 type='text'
+3.新建app：mainapp
+	修改models.py
+    	models.ImageField()需要安装Pillow，pip install Pillow
+    	数据库同步完成：migrate
+
+疑问：
+html输入标签type有哪些？？
+两次输入密码相同检测？？
+用户名、邮箱、密码为必输项，输入框前面加入*号，其余为非必须项？？？
+用户评论得另建一个表！？，记录评论人，被评论人，时间，内容
