@@ -1,43 +1,71 @@
+#coding:utf-8
 from django.db import models
 
 # Create your models here.
 class User(models.Model):
-	username = models.CharField(max_length = 50)
-	password = models.CharField(max_length = 50)
-	email = models.EmailField()
-	institute = models.CharField(max_length = 50)
-	major = models.CharField(max_length = 50)
-	birthday = models.DateField()
-	icon = models.ImageField(upload_to = "./img")
-	degree = models.IntegerField()
-
+	'''主键使用默认id'''
+	username = models.CharField(max_length = 50)	#用户名
+	password = models.CharField(max_length = 50)	#密码，密码格式暂时不定
+	email = models.EmailField()	#邮件，可用于验证，修改密码等
+	institute = models.CharField(max_length = 50)	#学院
+	major = models.CharField(max_length = 50)	#专业
+	birthday = models.DateField()	#生日
+	icon = models.ImageField(upload_to = "./img")	#用户头像
+	degree = models.IntegerField()	#等级
+	def __unicode__(self):
+		return self.username
 class Friends(models.Model):
-	userID = models.IntegerField()
-	friendID = models.IntegerField()	
+	userID = models.IntegerField()	#两者id较小的
+	friendID = models.IntegerField()	#两者id较大的
+	def __unicode__(self):
+		return '%d-%d' % (self.userID, self.friendID)
 
-class UserForwardInfo(models.Model):
-	user = models.ForeignKey(User)
+class ForwardMesg(models.Model):
+	'''转发消息'''
+	user = models.ForeignKey(User)	#谁转发的
 	url = models.URLField()
 	time = models.DateField()
-	comments = models.TextField()	#set??
-
-class UserReleaseInfo(models.Model):
+	def __unicode__(self):
+		return self.url
+#用户转发信息的评论表
+class ForwardMesgComment(models.Model):
+	'''转发消息的评论'''
+	ForwardInfo = models.ForeignKey(ForwardMesg)	#用户转发的消息的外键
+	user = models.ForeignKey(User)	#谁评论的
+	content = models.TextField()	#评论内容
+	time = models.DateField()	#评论时间
+	def __unicode__(self):
+		return self.content
+class ReleaseMesg(models.Model):
+	'''发布消息'''
 	user = models.ForeignKey(User)
 	content = models.TextField()
 	time = models.DateField()
-	comments = models.TextField()	#set??
-
+	def __unicode__(self):
+		return self.content
+class ReleaseMesgComment(models.Model):
+	'''发布消息的评论'''
+	ReleaseInfo = models.ForeignKey(ReleaseMesg)	#对哪个消息的评论
+	user = models.ForeignKey(User)	#谁评论的
+	content = models.TextField()	#内容
+	time = models.DateField()	#时间
+	def __unicode__(self):
+		return self.content
 class News(models.Model):
-	source_url = models.URLField()
-	title = models.TextField()
-	author = models.TextField()
-	content = models.TextField()
-	time = models.TextField()
-	recommend_index = models.IntegerField()
-
+	'''从今日哈工大抓取的新闻'''
+	source_url = models.URLField()	#源链接url
+	title = models.TextField()	#新闻标题
+	author = models.TextField()	#新闻作者
+	content = models.TextField()	#新闻内容
+	time = models.TextField()	#新闻发布时间
+	recommend_index = models.IntegerField()	#推荐指数
+	def __unicode__(self):
+		return self.title
 class InterestTribe(models.Model):
-	ThreadID = models.IntegerField()
-	theam = models.CharField(max_length = 50)
-	content = models.TextField()
-	user = models.ForeignKey(User)
-
+	'''兴趣部落，这个还需继续明确！！！应该没这么简单'''
+	ThreadID = models.IntegerField()	#帖子id
+	theme = models.CharField(max_length = 50)	#主题
+	content = models.TextField()	
+	user = models.ForeignKey(User)	
+	def __unicode__(self):
+		return self.theme
