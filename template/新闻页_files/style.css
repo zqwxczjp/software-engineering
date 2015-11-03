@@ -1,0 +1,124 @@
+#SfMessWrap{
+	border:1px solid #33527e;
+	padding:1px;
+	width:210px;
+	background:#fff;
+	text-align:center;
+	position:absolute;
+}
+
+#SfMessHead{
+	background:#33527e;
+	line-height:22px;
+	height:22px;
+	text-indent:10px;
+	font-size:12px;
+	color:#fff;
+	text-align:left;
+	cursor:pointer;
+}
+#SfMessHead #SfMessTitle{
+	float:left;
+}
+#SfMessHeadIcon{
+	float:right;
+	width:19px;
+	height:22px;
+	background-image:url(imgs/icon.gif);
+}
+.SfMessIconOpen{
+	background-position:top;
+}
+.SfMessIconClose{
+	background-position:bottom;
+}
+
+#SfMessBody{
+	width:100%;
+	padding-bottom:5px;
+}
+#SfMessBodyTop{display:none;}
+#SfMessBodyMid{
+	width:200px;
+	margin:5px auto;
+	text-align:left;
+}
+
+#SfMessBodyMid input {
+	border:1px solid #c0d1d8;
+	background:#e2ebf0;
+	color:#9eacb9;
+	width:177px;
+	font-size:12px;
+}
+
+#SfMessBodyMid textarea {
+	width:100%;
+	border:1px solid #c0d1d8;
+	background:#e2ebf0;
+	color:#9eacb9;
+	height:88px;
+	overflow:hidden;
+	font-size:12px;
+}
+
+#SfMessBodyMid div {
+	margin-top:5px;
+	height:20px;
+}
+#SfMessBodyMid .message {
+	height:auto;
+}
+#SfMessBodyMid .company {
+	padding-left:18px;
+	background:url(imgs/company.gif) no-repeat;
+}
+#SfMessBodyMid .tel {
+	padding-left:18px;
+	background:url(imgs/mobile.gif) no-repeat;
+}
+#SfMessBodyMid .address {
+	padding-left:18px;
+	background:url(imgs/address.gif) no-repeat;
+}
+#SfMessBodyMid .email {
+	padding-left:18px;
+	background:url(imgs/email.gif) no-repeat;
+}
+#SfMessBodyMid .must, #SfMessBodyMid .ignore, #SfMessBodyMid .other {
+	padding-left:18px;
+	background:url(imgs/other.gif) no-repeat;
+}
+
+#SfMessBodyBottom{
+	margin:0 auto;
+	width:200px;
+	height:23px;
+	
+}
+
+#SfMessSubmit{
+	background:url(imgs/send.gif);
+	color:#fff;
+	width:67px;
+	height:22px;
+	border:0;
+	float:left;
+}
+
+#SfMessCopy{
+	float:right;
+	margin:8px 2px;
+	line-height:14px;
+	font-size:12px;
+	color:#aab3bc;
+	padding-right:10px;
+	background:url(imgs/sign.gif) right no-repeat;
+}
+
+.SfMessTip{
+	display:none;
+}
+#SfMessBodyFoot{
+	display:none;
+}
