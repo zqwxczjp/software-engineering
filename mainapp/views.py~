@@ -53,6 +53,6 @@ def index(request):
 	addnews=News(source_url=a[0][i],title=a[2][i],time=a[1][i],recommend_index=a[3][i])
 	addnews.save()
 	add_news.append(addnews)
-    con={"b0":add_news[0],"b1":add_news[1],"b2":add_news[2],"b3":add_news[3],"b4":add_news[4],"b5":add_news[5]}	
+    con={"b":add_news}	
     return TR(request,"index.html",con)
 # Create your views here.
