@@ -121,12 +121,12 @@ def login(request):
     wrong = ''
     if request.method == 'POST':
         p = request.POST
-        user = User.objects.get(username = p['username'])
+        user = User.objects.filter(username = p['username'])
         if not user:
             wrong = '没有这个用户！'
-        elif user.state == USER_STATE_DEFAULT:
+        elif user[0].state == USER_STATE_DEFAULT:
             wrong = '此账户还没有激活，请去激活'
-        elif user.password != p['password']:
+        elif user[0].password != p['password']:
             wrong = '用户名和密码不匹配！'
         else:
             request.session['username'] = p['username']
@@ -178,7 +178,7 @@ def active(request, username, code):
         if user[0].state == USER_STATE_ACTIVE:
             tip = u'该用户已激活！'
         elif code == user[0].active_code:
-            user.update(state = USER_STATE_ACTIVE, active_code = '')
+            user.update(state = USER_STATE_ACTIVE)
         else:
             raise Http404
     return render(request, 'ActiveInfo.html', {'tip': tip, 'username': username})

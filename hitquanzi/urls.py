@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^signup/$', signup, name = 'signup'), #注册
     url(r'^login/$', login),
     url(r'^logout/$', logout, name = 'logout'),
-    url(r'^email/$', email),
+    url(r'^email/$', email),    #just a test
     url(r'^news_page/$', news_page),
     url(r'^active/(?P<username>[a-zA-Z0-9_]{3,50})/(?P<code>\w+)$', active),
     
