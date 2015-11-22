@@ -49,16 +49,22 @@
             <li><a href="http://www.baidu.com/">Friends</a></li>
             <li><a href="http://www.baidu.com/">Forum</a></li>
           </ul>
-		  <form class="navbar-form navbar-right" role="form">
+          <!--错误信息我不知道该放在哪-->
+            {% if tip %}
+            <font>{{ tip }}</font>
+            {% endif %}
+		  <form class="navbar-form navbar-right" role="form" action = "/login/" method = "post">
+          {% csrf_token %}
             <div class="form-group">
-              <input type="text" placeholder="账号" class="form-control" data-form-un="1445950114238.924">
+              <input type="text" placeholder="账号" class="form-control" data-form-un="1445950114238.924" name = 'username'>
             </div>
             <div class="form-group">
-              <input type="password" placeholder="密码" class="form-control" data-form-pw="1445950114238.924">
+              <input type="password" placeholder="密码" class="form-control" data-form-pw="1445950114238.924" name = 'password'>
             </div>
             <button type="submit" class="btn btn-success" data-form-sbm="1445950114238.924">登录</button>
-			<a class="btn btn-link" href="http://www.baidu.com/">注册</a>
+			<a class="btn btn-link" href = {% url 'signup' %}>注册</a>
           </form>
+          
         </div><!-- /.nav-collapse -->	
       </div><!-- /.container -->
     </div><!-- /.navbar -->
@@ -106,7 +112,7 @@
             <div class="col-6 col-sm-6 col-lg-4">
               <h2>{{b0.title}}</h2>
               <p>推荐指数：{{b0.recommend_index}} </p>
-              <p><a class="btn btn-default" href="{{b0.source_url}}" role="button">View details »</a></p>
+              <p><a class="btn btn-default" href="http://today.hit.edu.cn{{b0.source_url}}" role="button">View details »</a></p>
             </div><!--/span-->
             <div class="col-6 col-sm-6 col-lg-4">
               <h2>{{b1.title}}</h2>

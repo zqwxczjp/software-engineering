@@ -1,0 +1,5 @@
+<html>
+<body>
+<p><a href = '/email/' >Send email...</a></p>
+</body>
+</html>

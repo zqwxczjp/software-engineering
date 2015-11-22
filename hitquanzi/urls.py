@@ -1,3 +1,4 @@
+#coding:utf-8
 """hitquanzi URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -15,9 +16,17 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from mainapp import views
-
+from mainapp.views import *
+import settings
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$',views.index)
+    url(r'^$', index, name = 'home'),
+    url(r'^signup/$', signup, name = 'signup'), #注册
+    url(r'^login/$', login),
+    url(r'^logout/$', logout, name = 'logout'),
+    url(r'^email/$', email),
+    url(r'^active/(?P<username>[a-zA-Z0-9_]{3,50})/(?P<code>\w+)$', active),
+    
+    #url(r'^css/(?P<path>.*)', 'django.views.static.serve',
+    #    {'document_root': settings.CSS_DIR}),
 ]

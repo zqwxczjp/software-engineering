@@ -1,3 +1,4 @@
+#coding:utf-8
 """
 Django settings for hitquanzi project.
 
@@ -77,8 +78,11 @@ WSGI_APPLICATION = 'hitquanzi.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': 'quanzi',
+        'USER': 'root',
+        'PASSWORD': '1026',
     }
 }
 
@@ -101,3 +105,22 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = ''
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "template"),
+    os.path.join(BASE_DIR, "bookapp/static/admin"),
+)
+#CSS_DIR = './template/css'
+
+#Email config
+
+EMAIL_HOST = 'smtp.sina.com'                   #SMTP地址
+EMAIL_PORT = 25                                 #SMTP端口
+EMAIL_HOST_USER = 'hitquanzi@sina.com'       #我自己的邮箱
+EMAIL_HOST_PASSWORD = 'ZQWXCZJP'                  #我的邮箱密码
+EMAIL_SUBJECT_PREFIX = u'[HIT圈子]'            #为邮件Subject-line前缀,默认是'[django]'
+EMAIL_USE_TLS = True                             #与SMTP服务器通信时，是否启动TLS链接(安全链接)。默认是false
+#管理员站点
+SERVER_EMAIL = '254659389@qq.com'            

@@ -8,7 +8,9 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    {% load staticfiles %}
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+    <link href="{% static "bootstrap-responsive.css" %}" rel="stylesheet">
     <style type="text/css">
       body {
         padding-top: 40px;
@@ -42,35 +44,29 @@
       }
 
     </style>
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
 
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="../assets/js/html5shiv.js"></script>
-    <![endif]-->
 
-    <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://v2.bootcss.com/assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://v2.bootcss.com/assets/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://v2.bootcss.com/assets/ico/apple-touch-icon-72-precomposed.png">
-                    <link rel="apple-touch-icon-precomposed" href="http://v2.bootcss.com/assets/ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="http://v2.bootcss.com/assets/ico/favicon.png">
+
   </head>
 
   <body>
 
     <div class="container">
 
-      <form class="form-signin">
+      <form class="form-signin" action = '' method = 'post'>
+      {% csrf_token %}
         <h2 class="form-signin-heading">请注册</h2>
-        <input class="input-block-level" placeholder="用户名" type="text">
-        <input class="input-block-level" placeholder="邮箱" type="text">
-        <input class="input-block-level" placeholder="密码" type="password">
-        <input class="input-block-level" placeholder="确认密码" type="password">
-        <input class="input-block-level" placeholder="年龄" type="text">
-        <input class="input-block-level" placeholder="专业" type="text">
-        <input class="input-block-level" placeholder="学院" type="text">
-        <input class="input-block-level" placeholder="学号" type="text">
+        {% if error %}
+        <h3 color:#ff0000>警告:{{ error }}</h3>
+        {% endif %}
+        <input class="input-block-level" placeholder="*用户名" type="text" name = 'username'>
+        <input class="input-block-level" placeholder="*邮箱" type="text" name = 'email'>
+        <input class="input-block-level" placeholder="*密码(至少3个字符!)" type="password" name = 'password'>
+        <input class="input-block-level" placeholder="*确认密码" type="password" name = 'password_confirm'>
+        <input class="input-block-level" placeholder="年龄" type="text" name = 'age'>
+        <input class="input-block-level" placeholder="学院" type="text" name = 'institute'>
+        <input class="input-block-level" placeholder="专业" type="text" name = 'major'>
+        <input class="input-block-level" placeholder="学号" type="text" name = 'studentid'>
         <label class="checkbox">
           <input value="remember-me" type="checkbox"> Remember me
         </label>
@@ -78,24 +74,4 @@
       </form>
 
     </div> <!-- /container -->
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="css/jquery.js"></script>
-    <script src="css/bootstrap-transition.js"></script>
-    <script src="css/bootstrap-alert.js"></script>
-    <script src="css/bootstrap-modal.js"></script>
-    <script src="css/bootstrap-dropdown.js"></script>
-    <script src="css/bootstrap-scrollspy.js"></script>
-    <script src="css/bootstrap-tab.js"></script>
-    <script src="css/bootstrap-tooltip.js"></script>
-    <script src="css/bootstrap-popover.js"></script>
-    <script src="css/bootstrap-button.js"></script>
-    <script src="css/bootstrap-collapse.js"></script>
-    <script src="css/bootstrap-carousel.js"></script>
-    <script src="css/bootstrap-typeahead.js"></script>
-
-  
-
 </body></html>

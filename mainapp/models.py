@@ -12,6 +12,8 @@ class User(models.Model):
 	birthday = models.DateField()	#生日
 	icon = models.ImageField(upload_to = "./img")	#用户头像
 	degree = models.IntegerField()	#等级
+	state = models.IntegerField(blank = True)   #默认值为-1, 设置为1表示激活，用户正常
+	active_code = models.CharField(max_length = 200)
 	def __unicode__(self):
 		return self.username
 class Friends(models.Model):
