@@ -60,7 +60,7 @@ class News(models.Model):
 	author = models.TextField()	#新闻作者
 	content = models.TextField()	#新闻内容
 	time = models.TextField()	#新闻发布时间
-	recommend_index = models.TextField()	#推荐指数
+	recommend_index = models.IntegerField()	#推荐指数
 	def __unicode__(self):
 		return self.title
 class InterestTribe(models.Model):

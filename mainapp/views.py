@@ -12,61 +12,39 @@ import urllib2
 import re
 import uuid
 import time
+from lxml import etree
+import urllib2
+import codecs
 from django.core.mail import send_mail, EmailMultiAlternatives 
 PASSWD_MIN_LENGTH = 3
 AGE_DEFAULT = 0
 USER_STATE_DEFAULT = -1
 USER_STATE_ACTIVE = 1
 def index(request):
-    a=[]
-    class Spider:
-	    def __init__(self):
-		self.siteURL = 'http://today.hit.edu.cn/phb/0.htm'
-	 
-	    def getPage(self):
-		url = self.siteURL
-		request = urllib2.Request(url)
-		response = urllib2.urlopen(request)
-		return response.read().decode('gbk')
-	 
-	    def getContents(self):
-		page = self.getPage()
-		pattern = re.compile("<li><a href='.*?' target='_blank'>.*?</a> ....-..-.. <span style='color:red'>.*?</span></li>",re.S)
-		items = re.findall(pattern,page)
-		url=[]
-		date=[]
-		title=[]
-		recommend=[]
-	    	for i in range(1,4):
-			url_w=re.findall("<a href='.*?'",items[i])
-			url.append(url_w[0][9:-1])
-			title_w=re.findall("target='_blank'>.*?</a>",items[i])
-			title.append(title_w[0][16:-4])
-			date_w=re.findall("</a> .*? <",items[1])
-			date.append(date_w[0][5:-2])
-			recommend_w=re.findall("red'>.*?</span>",items[i])
-			recommend.append(recommend_w[0][5:-10])
-		return [url,date,title,recommend]
-    
-    spider = Spider()
-    a=spider.getContents()
+    requesth = urllib2.Request("http://today.hit.edu.cn/phb/0.htm")
+    response = urllib2.urlopen(requesth)
+
+    selector=etree.HTML(response.read().decode('gb2312'))
+
+    title=selector.xpath("//div[@class='charbox_content']/ol/li/a/text()")
+    time=selector.xpath("//div[@class='charbox_content']/ol/li/text()")
+    recommend_index=selector.xpath("//div[@class='charbox_content']/ol/li/span/text()")
+    source_url=selector.xpath("//div[@class='charbox_content']/ol/li/a/@href")
     add_news=[]
-    for i in range(0,3):
-	addnews=News(source_url=a[0][i],title=a[2][i],time=a[1][i],recommend_index=a[3][i])
-	addnews.save()
+    for i in range(0,6):
+	addnews=News(source_url=source_url[i],title=title[i],time=time[i],recommend_index=recommend_index[i])
 	add_news.append(addnews)
-   # con={"b0":add_news[0],"b1":add_news[1],"b2":add_news[2],"b3":add_news[3],"b4":add_news[4],"b5":add_news[5]}
-    
+ 
 
     if request.session:
         print '---------------------session runs--------------------'
     if 'username' in request.session:
         print '----------------------succeed------------------------'
         return render(request, 'loginlater.html', {'username': request.session['username']})
-    con={"b0":add_news[0],"b1":add_news[1],"b2":add_news[2]}
+    
+    con={"b0":add_news[0],"b1":add_news[1],"b2":add_news[2],"b3":add_news[3],"b4":add_news[4],"b5":add_news[5]}
     return TR(request,"index.html",con)
     
-    #return TR(request,"index.html",{})
 #-----------------------------------------------
 #激活码计算:邮箱+当前时间
 def active_code(email):
@@ -169,7 +147,15 @@ def logout(request):
     home = '/'
     return HttpResponseRedirect(home)
 
-    
+def news_page(requestl):
+    url=requestl.GET['url']
+    realurl='http://today.hit.edu.cn'+ url
+    request = urllib2.Request(realurl)
+    response = urllib2.urlopen(request)
+    selector=etree.HTML(response.read().decode('gbk'))
+    contents=selector.xpath("//div[@id='page_main']")
+    info=contents[0].xpath('string(.)')   
+    return TR(requestl,"新闻页.html",{"info":info}) 
 
 def email(request):
     title = u'greeting'

@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^login/$', login),
     url(r'^logout/$', logout, name = 'logout'),
     url(r'^email/$', email),
+    url(r'^news_page/$', news_page),
     url(r'^active/(?P<username>[a-zA-Z0-9_]{3,50})/(?P<code>\w+)$', active),
     
     #url(r'^css/(?P<path>.*)', 'django.views.static.serve',
