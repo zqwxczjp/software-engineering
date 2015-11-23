@@ -1,0 +1,19 @@
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 100px;
+  padding-bottom: 20px;
+}
+
+
+.article{
+	text-align:left;
+	padding-left:150px;
+	padding-right:150px;
+	height:700px;
+}
+
+.footer{
+	text-align:center;
+	clear:both;
+	padding-left:300px;
+}

@@ -1,6 +1,6 @@
 .Input_Box {     
     width: 495px;     
-    height: 160px;     
+    height: 145px;     
     border: 1px solid #ccc;     
     transition: border linear .2s, box-shadow linear .5s;     
     -moz-transition: border linear .2s, -moz-box-shadow linear .5s;     
