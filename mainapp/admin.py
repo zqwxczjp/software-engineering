@@ -8,10 +8,10 @@ class UserAdmin(admin.ModelAdmin):
 class FriendsAdmin(admin.ModelAdmin):
     list_display = ('userID', 'friendID')
 
-class ForwardMesgAdmin(admin.ModelAdmin):
+class ForwardNewsAdmin(admin.ModelAdmin):
 	list_display = ('url', 'time')
 
-class ForwardMesgCommentAdmin(admin.ModelAdmin):
+class ForwardNewsCommentAdmin(admin.ModelAdmin):
 	list_display = ('content', 'time')
 
 class ReleaseMesgAdmin(admin.ModelAdmin):
@@ -28,8 +28,8 @@ class InterestTribeAdmin(admin.ModelAdmin):
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Friends, FriendsAdmin)
-admin.site.register(ForwardMesg, ForwardMesgAdmin)
-admin.site.register(ForwardMesgComment, ForwardMesgCommentAdmin)
+admin.site.register(ForwardNews, ForwardNewsAdmin)
+admin.site.register(ForwardNewsComment, ForwardNewsCommentAdmin)
 admin.site.register(ReleaseMesg, ReleaseMesgAdmin)
 admin.site.register(ReleaseMesgComment, ReleaseMesgCommentAdmin)
 admin.site.register(News, NewsAdmin)

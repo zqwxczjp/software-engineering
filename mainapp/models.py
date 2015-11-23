@@ -7,13 +7,13 @@ class User(models.Model):
 	username = models.CharField(max_length = 50)	#用户名
 	password = models.CharField(max_length = 50)	#密码，密码格式暂时不定
 	email = models.EmailField()	#邮件，可用于验证，修改密码等
-	institute = models.CharField(max_length = 50)	#学院
-	major = models.CharField(max_length = 50)	#专业
-	birthday = models.DateField()	#生日
-	icon = models.ImageField(upload_to = "./img")	#用户头像
-	degree = models.IntegerField()	#等级
+	institute = models.CharField(max_length = 50, null = True, blank = True)	#学院
+	major = models.CharField(max_length = 50, null = True, blank = True)	#专业
+	birthday = models.DateField(null = True, blank = True)	#生日
+	icon = models.ImageField(upload_to = "./img", null = True, blank = True)	#用户头像
+	degree = models.IntegerField(null = True, blank = True)	#等级
 	state = models.IntegerField(blank = True)   #默认值为-1, 设置为1表示激活，用户正常
-	active_code = models.CharField(max_length = 200)
+	active_code = models.CharField(max_length = 200, null = True, blank = True)
 	def __unicode__(self):
 		return self.username
 class Friends(models.Model):
@@ -22,20 +22,21 @@ class Friends(models.Model):
 	def __unicode__(self):
 		return '%d-%d' % (self.userID, self.friendID)
 
-class ForwardMesg(models.Model):
+class ForwardNews(models.Model):
 	'''转发消息'''
 	user = models.ForeignKey(User)	#谁转发的
 	url = models.URLField()
+	title = models.CharField(max_length = 200, null = True, blank = True)
 	time = models.DateField()
 	def __unicode__(self):
 		return self.url
 #用户转发信息的评论表
-class ForwardMesgComment(models.Model):
+class ForwardNewsComment(models.Model):
 	'''转发消息的评论'''
-	ForwardInfo = models.ForeignKey(ForwardMesg)	#用户转发的消息的外键
+	ForwardInfo = models.ForeignKey(ForwardNews)	#用户转发的消息的外键
 	user = models.ForeignKey(User)	#谁评论的
 	content = models.TextField()	#评论内容
-	time = models.DateField()	#评论时间
+	time = models.DateField(null = True, blank = True)	#评论时间
 	def __unicode__(self):
 		return self.content
 class ReleaseMesg(models.Model):
