@@ -119,6 +119,19 @@ def signup(request):
 
 def login(request):
     wrong = ''
+    requesth = urllib2.Request("http://today.hit.edu.cn/phb/0.htm")
+    response = urllib2.urlopen(requesth)
+
+    selector=etree.HTML(response.read().decode('gb2312'))
+
+    title=selector.xpath("//div[@class='charbox_content']/ol/li/a/text()")
+    time=selector.xpath("//div[@class='charbox_content']/ol/li/text()")
+    recommend_index=selector.xpath("//div[@class='charbox_content']/ol/li/span/text()")
+    source_url=selector.xpath("//div[@class='charbox_content']/ol/li/a/@href")
+    add_news=[]
+    for i in range(5,11):
+	addnews=News(source_url=source_url[i],title=title[i],time=time[i],recommend_index=recommend_index[i])
+	add_news.append(addnews)
     if request.method == 'POST':
         p = request.POST
         user = User.objects.filter(username = p['username'])
@@ -131,7 +144,8 @@ def login(request):
         else:
             request.session['username'] = p['username']
             print '---------------------create session------------------'
-            return render(request, 'loginlater.html', {'username': p['username']}, \
+            return render(request, 'loginlater.html', {'username': p['username'],"b0":add_news[0],\
+		"b1":add_news[1],"b2":add_news[2],"b3":add_news[3],"b4":add_news[4],"b5":add_news[5]}, \
                 context_instance=RequestContext(request))
     return render(request, 'index.html', {'tip': wrong}, \
         context_instance=RequestContext(request)) 

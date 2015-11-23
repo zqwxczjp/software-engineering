@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0080)file:///F:/software%20engineering/Off%20Canvas%20Template%20for%20Bootstrap.html -->
+<!-- saved from url=(0081)file:///F:/software%20engineering/Off%20Canvas%20Template%20for%20Bootstrap.html# -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,8 +17,8 @@
     <link href="http://bootstrap.evget.com/examples/offcanvas/offcanvas.css" rel="stylesheet">
 	
 	<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-	<script src="./主菜单_files/jquery.min.js"></script>
-	<script src="./主菜单_files/bootstrap.min.js"></script>
+	<script src="./登陆后主界面_files/jquery.min.js"></script>
+	<script src="./登陆后主界面_files/bootstrap.min.js"></script>
 	
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
@@ -46,23 +46,20 @@
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="http://www.baidu.com/">新闻和课程</a></li>
+            <li><a href="http://www.baidu.com/">好友</a></li>
+            <li><a href="http://www.baidu.com/">个人主页</a></li>
           </ul>
-          <!--错误信息我不知道该放在哪-->
-            {% if tip %}
-            <font>{{ tip }}</font>
-            {% endif %}
-		  <form class="navbar-form navbar-right" role="form" action = "/login/" method = "post">
-          {% csrf_token %}
+		  <form class="navbar-form navbar-right" role="form">
             <div class="form-group">
-              <input type="text" placeholder="账号" class="form-control" data-form-un="1445950114238.924" name = 'username'>
+			  你好，<a href="./登陆后主界面_files/登陆后主界面.html">{{ username }}账号</a>
+              <!--input type="text" placeholder="账号" class="form-control"-->
             </div>
-            <div class="form-group">
-              <input type="password" placeholder="密码" class="form-control" data-form-pw="1445950114238.924" name = 'password'>
+            <!--div class="form-group">
+              <input type="password" placeholder="密码" class="form-control">
             </div>
-            <button type="submit" class="btn btn-success" data-form-sbm="1445950114238.924">登录</button>
-			<a class="btn btn-link" href = {% url 'signup' %}>注册</a>
+            <button type="submit" class="btn btn-success">登录</button-->
+			<a class="btn btn-link" href="{% url 'logout' %}">退出登录</a>
           </form>
-          
         </div><!-- /.nav-collapse -->	
       </div><!-- /.container -->
     </div><!-- /.navbar -->
@@ -78,24 +75,24 @@
 		  
           <div id="myCarousel" class="carousel slide">
 			<ol class="carousel-indicators">
-				<li data-target="#myCarousel" data-slide-to="0" class="active">
-				</li><li data-target="#myCarousel" data-slide-to="1">
-				</li><li data-target="#myCarousel" data-slide-to="2">
+				<li data-target="#myCarousel" data-slide-to="0" class="">
+				</li><li data-target="#myCarousel" data-slide-to="1" class="">
+				</li><li data-target="#myCarousel" data-slide-to="2" class="active">
 			</li></ol>
-			<!--<div class="carousel-inner" role="listbox">
-				<div class="item active" align="center">
-					<a href="http://www.baidu.com/" target="_blank"><img src="./主菜单_files/QQ图片20151027193233.png" alt="First slide"></a>
+			<div class="carousel-inner" role="listbox">
+				<div class="item" align="center">
+					<a href="http://www.baidu.com/" target="_blank"><img src="./登陆后主界面_files/QQ图片20151027193233.png" alt="First slide"></a>
 					<div class="carousel-caption">标题 1</div>
 				</div>
 				<div class="item" align="center">
-					<a href="http://www.baidu.com/" target="_blank"><img src="./主菜单_files/QQ图片20151027193233.png" alt="First slide"></a>
+					<a href="http://www.baidu.com/" target="_blank"><img src="./登陆后主界面_files/QQ图片20151027193233.png" alt="First slide"></a>
 					<div class="carousel-caption">标题 2</div>
 				</div>
-				<div class="item" align="center">
-					<a href="http://www.baidu.com/" target="_blank"><img src="./主菜单_files/QQ图片20151027193233.png" alt="First slide"></a>
+				<div class="item active" align="center">
+					<a href="http://www.baidu.com/" target="_blank"><img src="./登陆后主界面_files/QQ图片20151027193233.png" alt="First slide"></a>
 					<div class="carousel-caption">标题 3</div>
 				</div>
-			</div>-->
+			</div>
 			<a class="carousel-control left" href="file:///F:/demo/bootstrap3-plugin-carousal-caption.htm#myCarousel" role="button" data-slide="prev">
 				<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
     			<span class="sr-only">Previous</span>
@@ -108,34 +105,34 @@
 		  
           <div class="row">
             <div class="col-6 col-sm-6 col-lg-4">
-              <h2>{{b0.title}}</h2>
-              <p>{{b0.recommend_index}} </p>
-              <p><a class="btn btn-default" href="/news_page/?url={{b0.source_url}}" role="button">View details »</a></p>
+              <h2>New1</h2>
+              <p>Context </p>
+              <p><a class="btn btn-default" href="http://www.baidu.com/" role="button">View details »</a></p>
             </div><!--/span-->
             <div class="col-6 col-sm-6 col-lg-4">
-              <h2>{{b1.title}}</h2>
-              <p>{{b1.recommend_index}} </p>
-              <p><a class="btn btn-default" href="/news_page/?url={{b1.source_url}}" role="button">View details »</a></p>
+              <h2>New2</h2>
+              <p>Context </p>
+              <p><a class="btn btn-default" href="http://www.baidu.com/" role="button">View details »</a></p>
             </div><!--/span-->
             <div class="col-6 col-sm-6 col-lg-4">
-              <h2>{{b2.title}}</h2>
-              <p>{{b2.recommend_index}}  </p>
-              <p><a class="btn btn-default" href="/news_page/?url={{b2.source_url}}" role="button">View details »</a></p>
+              <h2>New3</h2>
+              <p>Context </p>
+              <p><a class="btn btn-default" href="http://www.baidu.com/" role="button">View details »</a></p>
             </div><!--/span-->
             <div class="col-6 col-sm-6 col-lg-4">
-              <h2>{{b3.title}}</h2>
-              <p>{{b3.recommend_index}}  </p>
-              <p><a class="btn btn-default" href="/news_page/?url={{b3.source_url}}" role="button">View details »</a></p>
+              <h2>New4</h2>
+              <p>Context </p>
+              <p><a class="btn btn-default" href="http://www.baidu.com/" role="button">View details »</a></p>
             </div><!--/span-->
             <div class="col-6 col-sm-6 col-lg-4">
-              <h2>{{b4.title}}</h2>
-              <p>{{b4.recommend_index}}  </p>
-              <p><a class="btn btn-default" href="/news_page/?url={{b4.source_url}}" role="button">View details »</a></p>
+              <h2>New5</h2>
+              <p>Context </p>
+              <p><a class="btn btn-default" href="http://www.baidu.com/" role="button">View details »</a></p>
             </div><!--/span-->
             <div class="col-6 col-sm-6 col-lg-4">
-              <h2>{{b5.title}}</h2>
-              <p>{{b5.recommend_index}}  </p>
-              <p><a class="btn btn-default" href="/news_page/?url={{b5.source_url}}" role="button">View details »</a></p>
+              <h2>New6</h2>
+              <p>Context </p>
+              <p><a class="btn btn-default" href="http://www.baidu.com/" role="button">View details »</a></p>
             </div><!--/span-->
           </div><!--/row-->
         </div><!--/span-->
@@ -143,27 +140,27 @@
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
           <div class="list-group" position="fixed">
             <a href="file:///F:/software%20engineering/url.%E7%83%AD%E7%82%B9%E6%96%B0%E9%97%BB" class="list-group-item active">热点新闻</a>
-	    <a href="file:///F:/software%20engineering/url.%E7%83%AD%E7%82%B9%E6%96%B0%E9%97%BB" class="list-group-item active">热点课程</a>
+            <a href="file:///F:/software%20engineering/url.%E7%83%AD%E7%82%B9%E4%BA%BA%E7%89%A9" class="list-group-item">热点课程</a>
           </div>
         </div><!--/span-->
       </div><!--/row-->
 	  
 	  <div>
 		  <ul class="pagination" align="center">
-			<li><a href="file:///F:/software%20engineering/Off%20Canvas%20Template%20for%20Bootstrap.html#">«</a></li>
-			<li><a href="file:///F:/software%20engineering/Off%20Canvas%20Template%20for%20Bootstrap.html#">1</a></li>
-			<li><a href="file:///F:/software%20engineering/Off%20Canvas%20Template%20for%20Bootstrap.html#">2</a></li>
-			<li><a href="file:///F:/software%20engineering/Off%20Canvas%20Template%20for%20Bootstrap.html#">3</a></li>
-			<li><a href="file:///F:/software%20engineering/Off%20Canvas%20Template%20for%20Bootstrap.html#">4</a></li>
-			<li><a href="file:///F:/software%20engineering/Off%20Canvas%20Template%20for%20Bootstrap.html#">5</a></li>
-			<li><a href="file:///F:/software%20engineering/Off%20Canvas%20Template%20for%20Bootstrap.html#">»</a></li>
+			<li><a href="./登陆后主界面_files/登陆后主界面.html">«</a></li>
+			<li><a href="./登陆后主界面_files/登陆后主界面.html">1</a></li>
+			<li><a href="./登陆后主界面_files/登陆后主界面.html">2</a></li>
+			<li><a href="./登陆后主界面_files/登陆后主界面.html">3</a></li>
+			<li><a href="./登陆后主界面_files/登陆后主界面.html">4</a></li>
+			<li><a href="./登陆后主界面_files/登陆后主界面.html">5</a></li>
+			<li><a href="./登陆后主界面_files/登陆后主界面.html">»</a></li>
 		  </ul>
 	  </div>
 
       <hr>
 
       <footer>
-        <p></p>
+        <p>© Company 2014</p>
       </footer>
 
     </div><!--/.container-->
@@ -173,9 +170,9 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="./主菜单_files/jquery.min(1).js"></script>
-    <script src="./主菜单_files/bootstrap.min(1).js"></script>
-    <script src="./主菜单_files/offcanvas.js"></script>
+    <script src="./登陆后主界面_files/jquery.min(1).js"></script>
+    <script src="./登陆后主界面_files/bootstrap.min(1).js"></script>
+    <script src="./登陆后主界面_files/offcanvas.js"></script>
   
 
 </body></html>
