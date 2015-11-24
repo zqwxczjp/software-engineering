@@ -243,8 +243,14 @@ def addfriend(request, username, friendID):
     user = User.objects.filter(username = username)
     if user:
         user = user[0]
-        if not Friends.objects.filter(userID = user.id, friendID = friendID):
-            Fds = Friends(userID = user.id, friendID = friendID)
+        if user.id > friendID:#前面存放id较小的
+            smallID = friendID
+            bigID = user.id
+        else:
+            smallID = user.id
+            bigID = friendID
+        if not Friends.objects.filter(userID = smallID, friendID = bigID):
+            Fds = Friends(userID = smallID, friendID = bigID)
             Fd = User.objects.filter(id = friendID)
             if Fd:
                 Fd = Fd[0]
