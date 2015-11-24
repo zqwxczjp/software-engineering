@@ -186,7 +186,7 @@ def logout(request):
     home = '/'
     return HttpResponseRedirect(home)
 
-def news_page(request):
+def news_page(requestl):
     url=requestl.GET['url']
     realurl='http://today.hit.edu.cn'+ url
     request = urllib2.Request(realurl)
@@ -194,7 +194,7 @@ def news_page(request):
     selector=etree.HTML(response.read().decode('gbk'))
     contents=selector.xpath("//div[@id='page_main']")
     info=contents[0].xpath('string(.)')   
-    return TR(request,"新闻页.html",{"info":info}) 
+    return TR(requestl,"新闻页.html",{"info":info}) 
 
 
 def friend(request, username):
