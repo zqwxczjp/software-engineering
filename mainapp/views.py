@@ -66,7 +66,32 @@ def send_active_email(username, email):
     #return HttpResponse(u'请查看你注册的信箱完成注册!!')
     return ActiveCode
 
+def email(request):
+    'just a test'
+    title = u'greeting'
+    content = u'first mail from django'
+    from_mail = u'hitquanzi@sina.com'
+    to_mail = ['89@qq.com'
+    ]
+    #send_mail(title, content, from_mail, to_mail, fail_silently = False)
+    send_active_email('zjp', '254659389@qq.com')
+    return HttpResponse('send done!')
 
+
+def active(request, username, code):
+    print username, code
+    tip = ''
+    user = User.objects.filter(username = username)
+    if not user:
+        tip = u'无此用户名！'
+    else:
+        if user[0].state == USER_STATE_ACTIVE:
+            tip = u'该用户已激活！'
+        elif code == user[0].active_code:
+            user.update(state = USER_STATE_ACTIVE)
+        else:
+            raise Http404
+    return render(request, 'ActiveInfo.html', {'tip': tip, 'username': username})
 #-------------------------------------------------
 def signup(request):
     error = ''
@@ -161,7 +186,7 @@ def logout(request):
     home = '/'
     return HttpResponseRedirect(home)
 
-def news_page(requestl):
+def news_page(request):
     url=requestl.GET['url']
     realurl='http://today.hit.edu.cn'+ url
     request = urllib2.Request(realurl)
@@ -169,38 +194,69 @@ def news_page(requestl):
     selector=etree.HTML(response.read().decode('gbk'))
     contents=selector.xpath("//div[@id='page_main']")
     info=contents[0].xpath('string(.)')   
-    return TR(requestl,"新闻页.html",{"info":info}) 
-
-def email(request):
-    title = u'greeting'
-    content = u'first mail from django'
-    from_mail = u'hitquanzi@sina.com'
-    to_mail = ['89@qq.com'
-    ]
-    #send_mail(title, content, from_mail, to_mail, fail_silently = False)
-    send_active_email('zjp', '254659389@qq.com')
-    return HttpResponse('send done!')
+    return TR(request,"新闻页.html",{"info":info}) 
 
 
-def active(request, username, code):
-    print username, code
-    tip = ''
+def friend(request, username):
+#没有登录，Http404
+    if not 'username' in request.session:
+        raise Http404
+#显示自己的好友
     user = User.objects.filter(username = username)
+    #查找为空，Http404
     if not user:
-        tip = u'无此用户名！'
+        raise Http404
+    user = user[0]
+    part1 = Friends.objects.filter(userID = user.id)
+    part2 = Friends.objects.filter(friendID = user.id)
+    friends = []
+    if part1:
+        for f in part1:
+            friends.append(User.objects.get(id = f.friendID))
+    elif part2:
+        for f in part2:
+            friends.append(User.objects.get(id = f.friendID))
     else:
-        if user[0].state == USER_STATE_ACTIVE:
-            tip = u'该用户已激活！'
-        elif code == user[0].active_code:
-            user.update(state = USER_STATE_ACTIVE)
+        pass
+#搜索好友
+    Results = None
+    Tip = None
+    HasSearch = False
+    SearchChar = ''
+    if 'SearchChar' in request.GET:
+        SearchChar = request.GET['SearchChar']
+        if SearchChar:
+            Results = User.objects.filter(username__icontains = SearchChar)
+            HasSearch = True
+    return TR(request, 'friends.html',\
+        {'username':username, 'friends':friends,\
+        'Results':Results,'Tip':Tip, 'SearchChar':SearchChar,\
+        'HasSearch':HasSearch })
+
+def addfriend(request, username, friendID):
+    se = request.session
+    FdName = ''
+    if not 'username' in se:#没有登录
+        raise Http404
+    if se['username'] != username:#不是本人操作
+        raise Http404
+    user = User.objects.filter(username = username)
+    if user:
+        user = user[0]
+        if not Friends.objects.filter(userID = user.id, friendID = friendID):
+            Fds = Friends(userID = user.id, friendID = friendID)
+            Fd = User.objects.filter(id = friendID)
+            if Fd:
+                Fd = Fd[0]
+                FdName = Fd.username
+            Fds.save()
         else:
             raise Http404
-    return render(request, 'ActiveInfo.html', {'tip': tip, 'username': username})
-    
-
-
-
-
+    else:
+        raise Http404
+    #url = '/friend/%s/' % username
+    return TR(request, 'AddFriendTimer.html',\
+        {'FdName': FdName,'username': username})
 
 
 

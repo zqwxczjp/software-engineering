@@ -3,7 +3,7 @@ from mainapp.models import *
 # Register your models here.
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('username','password','email','institute', 'major')
+    list_display = ('username','id', 'password','email','institute', 'major')
 
 class FriendsAdmin(admin.ModelAdmin):
     list_display = ('userID', 'friendID')

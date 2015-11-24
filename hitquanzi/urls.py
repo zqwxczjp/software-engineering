@@ -27,7 +27,8 @@ urlpatterns = [
     url(r'^email/$', email),    #just a test
     url(r'^news_page/$', news_page),
     url(r'^active/(?P<username>[a-zA-Z0-9_]{3,50})/(?P<code>\w+)$', active),
-    
+    url(r'^friend/(?P<username>[a-zA-Z0-9_]{3,50})/$', friend, name = 'friendt'),
+    url(r'^addfriend/(?P<username>[a-zA-Z0-9_]{3,50})/(?P<friendID>\d+)/$', addfriend, name = 'addfriend'),
     #url(r'^css/(?P<path>.*)', 'django.views.static.serve',
     #    {'document_root': settings.CSS_DIR}),
 ]
