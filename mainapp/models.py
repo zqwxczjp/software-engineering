@@ -25,9 +25,9 @@ class Friends(models.Model):
 class ForwardNews(models.Model):
 	'''转发消息'''
 	user = models.ForeignKey(User)	#谁转发的
-	url = models.URLField()
+	url = models.URLField( null = True)
 	title = models.CharField(max_length = 200, null = True, blank = True)
-	time = models.DateField()
+	time = models.DateField( null = True)
 	def __unicode__(self):
 		return self.url
 #用户转发信息的评论表

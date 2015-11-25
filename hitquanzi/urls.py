@@ -26,8 +26,10 @@ urlpatterns = [
     url(r'^logout/$', logout, name = 'logout'),
     url(r'^email/$', email),    #just a test
     url(r'^news_page/$', news_page),
+    url(r'^self_pagehehe/$', self_pagehehe),  
     url(r'^active/(?P<username>[a-zA-Z0-9_]{3,50})/(?P<code>\w+)$', active),
     url(r'^friend/(?P<username>[a-zA-Z0-9_]{3,50})/$', friend, name = 'friendt'),
+    url(r'^self_page/(?P<username>[a-zA-Z0-9_]{3,50})/$', self_page, name = 'self_page'),
     url(r'^addfriend/(?P<username>[a-zA-Z0-9_]{3,50})/(?P<friendID>\d+)/$', addfriend, name = 'addfriend'),
     #url(r'^css/(?P<path>.*)', 'django.views.static.serve',
     #    {'document_root': settings.CSS_DIR}),

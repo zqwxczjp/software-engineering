@@ -41,13 +41,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="http://www.baidu.com/">工大圈子</a>
+          <a class="navbar-brand" href="#">工大圈子</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="http://www.baidu.com/">新闻和课程</a></li>
-            <li><a href="http://www.baidu.com/">好友</a></li>
-            <li><a href="http://www.baidu.com/">个人主页</a></li>
+            <li class="active"><a href="{% url 'home' %}">新闻和课程</a></li>
+            <li><a href="{% url 'friendt' username %}">好友</a></li>
+            <li><a href="#">个人主页</a></li>
           </ul>
 		  <form class="navbar-form navbar-right" role="form">
             <div class="form-group">
@@ -105,38 +105,37 @@
 		  
           <div class="row">
             <div class="col-6 col-sm-6 col-lg-4">
-              <h2>New1</h2>
-              <p>Context </p>
-              <p><a class="btn btn-default" href="http://www.baidu.com/" role="button">View details »</a></p>
+              <h2>{{b0.title}}</h2>
+              <p>{{b0.recommend_index}} </p>
+              <p><a class="btn btn-default" href="/news_page/?url={{b0.source_url}}" role="button">View details »</a></p>
             </div><!--/span-->
             <div class="col-6 col-sm-6 col-lg-4">
-              <h2>New2</h2>
-              <p>Context </p>
-              <p><a class="btn btn-default" href="http://www.baidu.com/" role="button">View details »</a></p>
+              <h2>{{b1.title}}</h2>
+              <p>{{b1.recommend_index}} </p>
+              <p><a class="btn btn-default" href="/news_page/?url={{b1.source_url}}" role="button">View details »</a></p>
             </div><!--/span-->
             <div class="col-6 col-sm-6 col-lg-4">
-              <h2>New3</h2>
-              <p>Context </p>
-              <p><a class="btn btn-default" href="http://www.baidu.com/" role="button">View details »</a></p>
+              <h2>{{b2.title}}</h2>
+              <p>{{b2.recommend_index}}  </p>
+              <p><a class="btn btn-default" href="/news_page/?url={{b2.source_url}}" role="button">View details »</a></p>
             </div><!--/span-->
             <div class="col-6 col-sm-6 col-lg-4">
-              <h2>New4</h2>
-              <p>Context </p>
-              <p><a class="btn btn-default" href="http://www.baidu.com/" role="button">View details »</a></p>
+              <h2>{{b3.title}}</h2>
+              <p>{{b3.recommend_index}}  </p>
+              <p><a class="btn btn-default" href="/news_page/?url={{b3.source_url}}" role="button">View details »</a></p>
             </div><!--/span-->
             <div class="col-6 col-sm-6 col-lg-4">
-              <h2>New5</h2>
-              <p>Context </p>
-              <p><a class="btn btn-default" href="http://www.baidu.com/" role="button">View details »</a></p>
+              <h2>{{b4.title}}</h2>
+              <p>{{b4.recommend_index}}  </p>
+              <p><a class="btn btn-default" href="/news_page/?url={{b4.source_url}}" role="button">View details »</a></p>
             </div><!--/span-->
             <div class="col-6 col-sm-6 col-lg-4">
-              <h2>New6</h2>
-              <p>Context </p>
-              <p><a class="btn btn-default" href="http://www.baidu.com/" role="button">View details »</a></p>
+              <h2>{{b5.title}}</h2>
+              <p>{{b5.recommend_index}}  </p>
+              <p><a class="btn btn-default" href="/news_page/?url={{b5.source_url}}" role="button">View details »</a></p>
             </div><!--/span-->
           </div><!--/row-->
         </div><!--/span-->
-
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
           <div class="list-group" position="fixed">
             <a href="file:///F:/software%20engineering/url.%E7%83%AD%E7%82%B9%E6%96%B0%E9%97%BB" class="list-group-item active">热点新闻</a>

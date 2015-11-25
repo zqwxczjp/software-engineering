@@ -9,13 +9,11 @@
     <link rel="shortcut icon" href="http://bootstrap.evget.com/assets/ico/favicon.ico">
 
     <title>Jumbotron Template for Bootstrap</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="http://bootstrap.evget.com/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="http://bootstrap.evget.com/examples/jumbotron/jumbotron.css" rel="stylesheet">
-
+    {% load staticfiles %}
+    <link href="./新闻页_files/bootstrap.min.css" rel="stylesheet">
+    <link href="./新闻页_files/jumbotron.css" rel="stylesheet">
+    <link href="./新闻页_files/pinglunlan.css" rel="stylesheet">
+    <link href="./新闻页_files/style.css" rel="stylesheet">
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
@@ -26,8 +24,7 @@
     <![endif]-->
 	
 	
-	<link href="./新闻页_files/pinglunlan.css" type="text/css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="./新闻页_files/style.css"></head>
+
 
   <body>
 
@@ -48,7 +45,7 @@
           </ul>
 		  <form class="navbar-form navbar-right" role="form">
             <div class="form-group">
-			  你好，<a href="file:///F:/software%20engineering/Jumbotron%20Template%20for%20Bootstrap.html#">xxx账号</a>
+			  你好，<a href="#">xxx账号</a>
               <!--input type="text" placeholder="账号" class="form-control"-->
             </div>
             <!--div class="form-group">
@@ -61,25 +58,25 @@
       </div><!-- /.container -->
     </div><!-- /.navbar -->
 	
-	<div>
-		<h1 align="center">head<small>subhead</small></h1>
-		<h5 align="center">author</h5>
-		<ul>
-		<li style="text-align:center"><img src="./新闻页_files/QQ图片20151027193233.jpg" style="width: 500px; height: 400px;">
-		</li>
-		</ul><p>{{info}}
-</p>
+	<div class="main">
+		<a type="button" class="btn" type="#">推荐文章</a>
+		<h1 align="center">科比连续4场50+笑傲NBA 乔丹之外还有“神”</h1>
+		<h5 align="center">汉水游侠</h5>
+		<div class="article">
+			<pre>网易体育3月24日讯 当科比（编辑科比资料）连续第三场拿下50+之后，也许还会有人建议他需要更多地帮助队友得分，才能证明自己。可科比没有理会，3月24日，湖人客场挑战黄蜂，科比再次以一己之力战胜了对手，他全场出战46分钟，29投16中、三分球5投2中、罚球16罚全中，砍下50分，并抓下7个篮板，带领湖人以111比105战胜黄蜂，取得4连胜。而那些善意的劝说者和教条者的言论更像是鸡蛋里挑骨头了。
+这也是科比连续第4场比赛得分超过50分，纵观NBA历史，只有张伯伦曾经连续7场得分超过50分，而乔丹和贝勒的连续3场得分50+的纪录也正式作古。值得一提的是，今天对阵黄蜂是湖人“背靠背”的第二场比赛，而这次“背靠背”是连续客场作战，可是科比没有表现出丝毫疲惫，他的出场时间和投篮次数，以及超过50%的投篮命中率，证明了乔丹之外，篮球场上仍有一位“神”！{{info}}</pre>
+		</div>
 	</div>
+		
 	
-	
-	<div class="Main">     
+	<div class="footer">     
          <div class="Input_Box">     
            <textarea class="Input_text"></textarea>     
            <div class="faceDiv"> </div>     
            <div class="Input_Foot"> <a class="imgBtn" href="javascript:void(0);"></a><a class="postBtn">确定</a> </div>     
          </div>     
-       </div>  
-
+   </div>  
+</body>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -89,4 +86,5 @@
 	<script type="text/javascript" src="./新闻页_files/2226422.js" charset="gb2312"></script><script src="./新闻页_files/entry.js" type="text/javascript"></script><script type="text/javascript" src="./新闻页_files/buildnormal.js"></script><div id="SfMessWrap" style="right: 0px; bottom: 0px; position: fixed;"><iframe id="SfMessCopyFrame" name="SfMessCopyFrame" style="display:none;"></iframe><form style="margin:0;" target="SfMessCopyFrame" name="SfMessForm" method="post" action="http://myshifen.baidu.com/sfmess/index.php?module=Front&controller=Messlist&action=addmess"><div id="SfMessHead"><div id="SfMessTitle">欢迎给我们留言</div><div class="SfMessIconClose" id="SfMessHeadIcon"></div></div><div id="SfMessBody" style="overflow: hidden; height: 145px;"><div id="SfMessBodyTop"></div><div id="SfMessBodyMid"><div id="SfMessTipmessage" class="SfMessTip">留言内容</div><div class="message"><textarea name="content" id="SfMess_content"></textarea></div><input type="hidden" value="2226422" name="contenthide" id="SfMess_contenthide"><div class="SfMessTip">手机号码</div><div class="tel"><input type="text" maxlength="40" name="phone" id="SfMess_phone"></div><input type="hidden" value="2226422" name="phonehide" id="SfMess_phonehide"></div><div id="SfMessBodyBottom"><input id="SfMessSubmit" type="submit" value="发送"><div id="SfMessCopy">百度提供技术支持</div></div><div id="SfMessBodyFoot"></div><input type="hidden" name="ownerid" value="2226422"></div></form></div>
   
 
-</body></html>
+
+</html>

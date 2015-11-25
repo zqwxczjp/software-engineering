@@ -31,7 +31,7 @@ def index(request):
     recommend_index=selector.xpath("//div[@class='charbox_content']/ol/li/span/text()")
     source_url=selector.xpath("//div[@class='charbox_content']/ol/li/a/@href")
     add_news=[]
-    for i in range(0,6):
+    for i in range(0,11):
 	addnews=News(source_url=source_url[i],title=title[i],time=time[i],recommend_index=recommend_index[i])
 	add_news.append(addnews)
  
@@ -40,7 +40,7 @@ def index(request):
         print '---------------------session runs--------------------'
     if 'username' in request.session:
         print '----------------------succeed------------------------'
-        return render(request, 'loginlater.html', {'username': request.session['username']})
+        return render(request, 'loginlater.html', {'username': request.session['username'],"b1":add_news[5],"b2":add_news[6],"b3":add_news[7],"b4":add_news[8],"b5":add_news[9],"b0":add_news[10]})
     
     con={"b0":add_news[0],"b1":add_news[1],"b2":add_news[2],"b3":add_news[3],"b4":add_news[4],"b5":add_news[5]}
     return TR(request,"index.html",con)
@@ -172,7 +172,8 @@ def login(request):
             return render(request, 'loginlater.html', {'username': p['username'],"b0":add_news[0],\
 		"b1":add_news[1],"b2":add_news[2],"b3":add_news[3],"b4":add_news[4],"b5":add_news[5]}, \
                 context_instance=RequestContext(request))
-    return render(request, 'index.html', {'tip': wrong}, \
+    return render(request, 'index.html', {'tip': wrong,"b0":add_news[0],\
+		"b1":add_news[1],"b2":add_news[2],"b3":add_news[3],"b4":add_news[4],"b5":add_news[5]}, \
         context_instance=RequestContext(request)) 
 
     
@@ -196,6 +197,30 @@ def news_page(requestl):
     info=contents[0].xpath('string(.)')   
     return TR(requestl,"新闻页.html",{"info":info}) 
 
+def self_page(request,username):
+    if not 'username' in request.session:
+        raise Http404
+#显示自己的好友
+    user = User.objects.filter(username = username)
+    #查找为空，Http404
+    if not user:
+        raise Http404
+    user = user[0]
+    news = ForwardNews.objects.filter(user = user)
+ 
+    return TR(request,"self_page.html",{'username':username,'news':news})
+
+def self_pagehehe(request):
+    newsadd=request.GET['new']
+    username=request.GET['username']
+    userzu=User.objects.filter(username = username)
+    user=userzu[0]
+    newnews=ForwardNews(user=user,title=newsadd)
+    newnews.save()
+    news = ForwardNews.objects.filter(user = user)
+ 
+    return TR(request,"self_page.html",{'username':username,'news':news})
+    
 
 def friend(request, username):
 #没有登录，Http404
@@ -228,7 +253,7 @@ def friend(request, username):
         if SearchChar:
             Results = User.objects.filter(username__icontains = SearchChar)
             HasSearch = True
-    return TR(request, 'friends.html',\
+    return TR(request, 'freinds.html',\
         {'username':username, 'friends':friends,\
         'Results':Results,'Tip':Tip, 'SearchChar':SearchChar,\
         'HasSearch':HasSearch })

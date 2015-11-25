@@ -47,7 +47,7 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="{% url 'home' %}">新闻和课程</a></li>
             <li><a href="{% url 'friendt' username %}">好友</a></li>
-            <li><a href="#">个人主页</a></li>
+            <li><a href="{% url 'self_page' username %}">个人主页</a></li>
           </ul>
 		  <form class="navbar-form navbar-right" role="form">
             <div class="form-group">
@@ -108,31 +108,37 @@
               <h2>{{b0.title}}</h2>
               <p>{{b0.recommend_index}} </p>
               <p><a class="btn btn-default" href="/news_page/?url={{b0.source_url}}" role="button">View details »</a></p>
+	      <p><a class="btn btn-default" href="/self_pagehehe/?new={{b0.title}}&username={{username}}" role="button">转发</a></p>
             </div><!--/span-->
             <div class="col-6 col-sm-6 col-lg-4">
               <h2>{{b1.title}}</h2>
               <p>{{b1.recommend_index}} </p>
               <p><a class="btn btn-default" href="/news_page/?url={{b1.source_url}}" role="button">View details »</a></p>
+	      <p><a class="btn btn-default" href="/self_pagehehe/?new={{b1.title}}&username={{username}}" role="button">转发</a></p>
             </div><!--/span-->
             <div class="col-6 col-sm-6 col-lg-4">
               <h2>{{b2.title}}</h2>
               <p>{{b2.recommend_index}}  </p>
               <p><a class="btn btn-default" href="/news_page/?url={{b2.source_url}}" role="button">View details »</a></p>
+	      <p><a class="btn btn-default" href="/self_pagehehe/?new={{b2.title}}&username={{username}}" role="button">转发</a></p>
             </div><!--/span-->
             <div class="col-6 col-sm-6 col-lg-4">
               <h2>{{b3.title}}</h2>
               <p>{{b3.recommend_index}}  </p>
               <p><a class="btn btn-default" href="/news_page/?url={{b3.source_url}}" role="button">View details »</a></p>
+              <p><a class="btn btn-default" href="/self_pagehehe/?new={{b3.title}}&username={{username}}" role="button">转发</a></p>
             </div><!--/span-->
             <div class="col-6 col-sm-6 col-lg-4">
               <h2>{{b4.title}}</h2>
               <p>{{b4.recommend_index}}  </p>
               <p><a class="btn btn-default" href="/news_page/?url={{b4.source_url}}" role="button">View details »</a></p>
+	       <p><a class="btn btn-default" href="/self_pagehehe/?new={{b4.title}}&username={{username}}" role="button">转发</a></p>
             </div><!--/span-->
             <div class="col-6 col-sm-6 col-lg-4">
               <h2>{{b5.title}}</h2>
               <p>{{b5.recommend_index}}  </p>
               <p><a class="btn btn-default" href="/news_page/?url={{b5.source_url}}" role="button">View details »</a></p>
+	      <p><a class="btn btn-default" href="/self_pagehehe/?new={{b5.title}}&username={{username}}" role="button">转发</a></p>
             </div><!--/span-->
           </div><!--/row-->
         </div><!--/span-->
