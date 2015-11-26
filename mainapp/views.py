@@ -216,7 +216,7 @@ def self_pagehehe(request):
     userzu=User.objects.filter(username = username)
     user=userzu[0]
     newnews=ForwardNews(user=user,title=newsadd)
-    newnews.save()
+    newnews.save()  #应该是这个model的url和time不能为空
     news = ForwardNews.objects.filter(user = user)
  
     return TR(request,"self_page.html",{'username':username,'news':news})
@@ -253,7 +253,7 @@ def friend(request, username):
         if SearchChar:
             Results = User.objects.filter(username__icontains = SearchChar)
             HasSearch = True
-    return TR(request, 'freinds.html',\
+    return TR(request, 'friends.html',\
         {'username':username, 'friends':friends,\
         'Results':Results,'Tip':Tip, 'SearchChar':SearchChar,\
         'HasSearch':HasSearch })
