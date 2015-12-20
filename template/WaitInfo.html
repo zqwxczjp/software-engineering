@@ -9,9 +9,9 @@
     setInterval("refer()",1000); //启动1秒定时 
     function refer(){  
         if(t==0){ 
-            location="http://localhost:8000/friend/{{ username }}"; //#设定跳转的链接地址 
+            location="{{ urlx }}"; //#设定跳转的链接地址 
         } 
-        document.getElementById('show').innerHTML="{{ FdName }}已经是你的好友了， "+t+" 秒后跳转到上一界面"; // 显示倒计时 
+        document.getElementById('show').innerHTML="{{ display }}"+t+" 秒后跳转到上一界面"; // 显示倒计时 
         t--; // 计数器递减 
         //本文转自： 
     } 

@@ -19,6 +19,8 @@ class User(models.Model):
 class Friends(models.Model):
 	userID = models.IntegerField()	#两者id较小的
 	friendID = models.IntegerField()	#两者id较大的
+    #-1:L->R; 1:R->L;0:L-R;
+	ReqDirection = models.IntegerField(null = True, blank = True)
 	def __unicode__(self):
 		return '%d-%d' % (self.userID, self.friendID)
 
@@ -72,3 +74,15 @@ class InterestTribe(models.Model):
 	user = models.ForeignKey(User)	
 	def __unicode__(self):
 		return self.theme
+
+class SendMesg(models.Model):
+	'向好友发送私信'
+	userFrom = models.IntegerField()
+	userTo = models.IntegerField()
+	Content = models.TextField()
+	Time = models.DateField(null = True, blank = True, auto_now_add = True)
+	HasRead = models.BooleanField(default = False)
+	def __unicode__(self):
+		#str = '%s -> %s' % (self.userFrom.username, self.userTo.username)
+		return self.Content
+	

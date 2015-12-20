@@ -16,10 +16,15 @@ from lxml import etree
 import urllib2
 import codecs
 from django.core.mail import send_mail, EmailMultiAlternatives 
+from mylib import AddFriendReq
+
 PASSWD_MIN_LENGTH = 3
 AGE_DEFAULT = 0
 USER_STATE_DEFAULT = -1
 USER_STATE_ACTIVE = 1
+REQ_DIR_L_R = -1
+REQ_DIR_R_L = 1
+REQ_AGREED = 0
 def index(request):
     requesth = urllib2.Request("http://today.hit.edu.cn/phb/0.htm")
     response = urllib2.urlopen(requesth)
@@ -32,8 +37,8 @@ def index(request):
     source_url=selector.xpath("//div[@class='charbox_content']/ol/li/a/@href")
     add_news=[]
     for i in range(0,11):
-	addnews=News(source_url=source_url[i],title=title[i],time=time[i],recommend_index=recommend_index[i])
-	add_news.append(addnews)
+        addnews=News(source_url=source_url[i],title=title[i],time=time[i],recommend_index=recommend_index[i])
+        add_news.append(addnews)
  
 
     if request.session:
@@ -168,7 +173,7 @@ def login(request):
             wrong = '用户名和密码不匹配！'
         else:
             request.session['username'] = p['username']
-            print '---------------------create session------------------'
+            #print '---------------------create session------------------'
             return render(request, 'loginlater.html', {'username': p['username'],"b0":add_news[0],\
 		"b1":add_news[1],"b2":add_news[2],"b3":add_news[3],"b4":add_news[4],"b5":add_news[5]}, \
                 context_instance=RequestContext(request))
@@ -180,9 +185,9 @@ def login(request):
 def logout(request):
     try:
         del request.session['username']
-        print '-----------------------session delete------------------------'
+        #print '-----------------------session delete------------------------'
     except KeyError:
-        print '*********************wrong***********************'
+        #print '*********************wrong***********************'
         pass
     home = '/'
     return HttpResponseRedirect(home)
@@ -235,15 +240,26 @@ def friend(request, username):
     part1 = Friends.objects.filter(userID = user.id)
     part2 = Friends.objects.filter(friendID = user.id)
     friends = []
+    mylist = []
     if part1:
         for f in part1:
+            user_t = User.objects.get(id = f.friendID)
             friends.append(User.objects.get(id = f.friendID))
+            mylist.append(AddFriendReq(user_t.username, f.friendID, f.ReqDirection))
     elif part2:
         for f in part2:
-            friends.append(User.objects.get(id = f.friendID))
+            user_t = User.objects.get(id = f.userID)
+            friends.append(User.objects.get(id = f.userID))
+            mylist.append(AddFriendReq(user_t.username, f.userID, -f.ReqDirection))
     else:
         pass
-#搜索好友
+    #print mylist[0].username
+    Info = []
+    Mesgs = SendMesg.objects.filter(userTo=user.id, HasRead=False)
+    for mesg in Mesgs:
+        tmp = [mesg, User.objects.filter(id=mesg.userFrom)[0]]
+        Info.append(tmp)
+#搜索用户
     Results = None
     Tip = None
     HasSearch = False
@@ -254,7 +270,9 @@ def friend(request, username):
             Results = User.objects.filter(username__icontains = SearchChar)
             HasSearch = True
     return TR(request, 'friends.html',\
-        {'username':username, 'friends':friends,\
+        {'username':username, \
+        'myself':user,\
+        'friends':friends,'mylist':mylist, 'Info':Info,\
         'Results':Results,'Tip':Tip, 'SearchChar':SearchChar,\
         'HasSearch':HasSearch })
 
@@ -268,34 +286,77 @@ def addfriend(request, username, friendID):
     user = User.objects.filter(username = username)
     if user:
         user = user[0]
+        ReqDir = 0
         if user.id > friendID:#前面存放id较小的
             smallID = friendID
             bigID = user.id
+            ReqDir = REQ_DIR_R_L
         else:
             smallID = user.id
             bigID = friendID
+            ReqDir = REQ_DIR_L_R
         if not Friends.objects.filter(userID = smallID, friendID = bigID):
-            Fds = Friends(userID = smallID, friendID = bigID)
-            Fd = User.objects.filter(id = friendID)
-            if Fd:
-                Fd = Fd[0]
-                FdName = Fd.username
+            Fds = Friends(userID = smallID, friendID = bigID, ReqDirection = ReqDir)
             Fds.save()
         else:
             raise Http404
     else:
         raise Http404
     #url = '/friend/%s/' % username
-    return TR(request, 'AddFriendTimer.html',\
-        {'FdName': FdName,'username': username})
+    urlx = 'http://localhost:8000/friend/%s' % username
+    display = '请等待%s确认 ^_^' % FdName
+    return TR(request, 'WaitInfo.html',\
+        {'urlx':urlx, 'display':display})
+
+def addfriendconfirm(request, username, friendID):
+    if not 'username' in request.session:
+        raise Http404
+    user = User.objects.filter(username = username)[0]
+    part1 = Friends.objects.filter(userID = user.id, friendID = friendID)
+    part2 = Friends.objects.filter(userID = friendID, friendID = user.id)
+    if part1:
+        part1.update(ReqDirection = REQ_AGREED)
+    elif part2:
+        part2.update(ReqDirection = REQ_AGREED)
+    else:
+        raise Http404
+    urlstr = '/friend/%s' % username
+    return HttpResponseRedirect(urlstr)
 
 
+def SendMesgx(request, username, friendID):
+    if not 'username' in request.session:
+        raise Http404
+    userFromt = User.objects.filter(username = username)[0]
+    userTot = User.objects.filter(id = friendID)[0]
+    if not userFromt or not userTot:
+        raise Http404
+    Tips = ''
+    if request.method == 'POST':
+        content = request.POST['content']
+        if not content:
+            Tips='必须输入至少一个字符!'
+        else:
+            print userFromt.id 
+            print userTot.id
+            new_mesg = SendMesg(userTo=userTot.id,\
+                userFrom=userFromt.id, Content=content, HasRead=False)
+            new_mesg.save()
+            urlx = 'http://localhost:8000/sendmesg/%s/%d/' % (userFromt.username, userTot.id)
+            display = '发送成功！'
+            return TR(request, 'WaitInfo.html',\
+                {'urlx':urlx, 'display':display})
+    return render(request, 'SendMesg.html',\
+        {'Tips':Tips, 'userfrom':userFromt, \
+        'userto':userTot,'username':userFromt.username,\
+        }, \
+        context_instance=RequestContext(request))
 
 
-
-
-
-
-
-
-
+def MarkRead(request, mesgid):
+    if not 'username' in request.session:
+        raise Http404
+    mesg = SendMesg.objects.filter(id=mesgid)
+    mesg.update(HasRead = True)
+    urlstr = '/friend/%s' % User.objects.filter(id=mesg[0].userTo)[0].username
+    return HttpResponseRedirect(urlstr)

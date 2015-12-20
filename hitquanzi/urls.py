@@ -31,6 +31,10 @@ urlpatterns = [
     url(r'^friend/(?P<username>[a-zA-Z0-9_]{3,50})/$', friend, name = 'friendt'),
     url(r'^self_page/(?P<username>[a-zA-Z0-9_]{3,50})/$', self_page, name = 'self_page'),
     url(r'^addfriend/(?P<username>[a-zA-Z0-9_]{3,50})/(?P<friendID>\d+)/$', addfriend, name = 'addfriend'),
+    url(r'^addfriendconfirm/(?P<username>[a-zA-Z0-9_]{3,50})/(?P<friendID>\d+)/$',\
+		addfriendconfirm, name = 'addfriendconfirm'),
+	url(r'^sendmesg/(?P<username>[a-zA-Z0-9_]{3,50})/(?P<friendID>\d+)/$', SendMesgx, name = 'SendMesg'),
+    url(r'^markread/(?P<mesgid>\d+)/$', MarkRead, name = 'MarkRead'),
     #url(r'^css/(?P<path>.*)', 'django.views.static.serve',
     #    {'document_root': settings.CSS_DIR}),
 ]
