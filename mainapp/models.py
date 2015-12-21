@@ -30,7 +30,7 @@ class ForwardNews(models.Model):
 	user = models.ForeignKey(User)	#谁转发的
 	url = models.URLField( null = True)
 	title = models.CharField(max_length = 200, null = True, blank = True)
-	time = models.DateField( null = True)
+	time = models.TextField( null = True)
 	def __unicode__(self):
 		return self.url
 #用户转发信息的评论表
@@ -76,6 +76,15 @@ class InterestTribe(models.Model):
 	def __unicode__(self):
 		return self.theme
 
+class NewsComment(models.Model):
+	'''新闻的评论'''
+	Newsinfo = models.ForeignKey(News)	#对哪个消息的评论
+	user = models.ForeignKey(User)	#谁评论的
+	content = models.TextField()	#内容
+	time = models.DateField(null=True)	#时间
+	def __unicode__(self):
+		return self.content
+        
 class SendMesg(models.Model):
 	'向好友发送私信'
 	userFrom = models.IntegerField()

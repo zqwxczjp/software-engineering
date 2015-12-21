@@ -51,7 +51,7 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li ><a href="{% url 'home' %}">新闻和课程</a></li>
+            <li ><a href="{% url 'home' username%}">新闻和课程</a></li>
             <li><a href="{% url 'friendt' username %}">好友</a></li>
             <li class="active"><a href="{% url 'self_page' username %}">个人主页</a></li>
           </ul>
@@ -80,7 +80,7 @@
     <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <p>用户名：{{ myself.username }}</p>
-    <p>邮箱:{{ myself.email }}</p>
+    <p>邮箱：{{ myself.email }}</p>
     <p>更改头像：<img src="/img/{{ username }}_icon.jpg" width="25" height="25" /><input type="file" name="icon"/></p>
     <p>学院：<input type="text" name="institute" value="{{ myself.institute }}""/></p>
     <p>专业：<input type="text" name="major" value="{{ myself.major }}"/></p>

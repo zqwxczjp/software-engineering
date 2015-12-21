@@ -21,13 +21,16 @@ import settings
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', hello, name = 'hello'),
-    url(r'^$', index, name = 'home'),
+    url(r'^home/(?P<username>[a-zA-Z0-9_]{3,50})/$', index, name = 'home'),
     url(r'^signup/$', signup, name = 'signup'), #注册
     url(r'^login/$', login),
     url(r'^logout/$', logout, name = 'logout'),
     url(r'^email/$', email),    #just a test
     url(r'^news_page/$', news_page),
     url(r'^self_pagehehe/$', self_pagehehe),  
+    url(r'^news_page/(?P<username>[a-zA-Z0-9_]{3,50})/(?P<url>.+)$', news_page,name='news_paget'),
+    url(r'^self_pagehehe/(?P<username>[a-zA-Z0-9_]{3,50})/(?P<url>.+)$', self_pagehehe,name="self_pagehehe"), 
+    url(r'^replays/$', replays),
     url(r'^active/(?P<username>[a-zA-Z0-9_]{3,50})/(?P<code>\w+)$', active),
     url(r'^friend/(?P<username>[a-zA-Z0-9_]{3,50})/$', friend, name = 'friendt'),
     url(r'^self_page/(?P<username>[a-zA-Z0-9_]{3,50})/$', self_page, name = 'self_page'),

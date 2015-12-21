@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<!-- saved from url=(0081)file:///F:/software%20engineering/Off%20Canvas%20Template%20for%20Bootstrap.html# -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="http://bootstrap.evget.com/assets/ico/favicon.ico">
+
+    <title>好友互动</title>
+
+   <!-- Bootstrap core CSS -->
+    <link href="http://bootstrap.evget.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="http://bootstrap.evget.com/examples/offcanvas/offcanvas.css" rel="stylesheet">
+	
+	<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+	<script src="./登陆后主界面_files/jquery.min.js"></script>
+	<script src="./登陆后主界面_files/bootstrap.min.js"></script>
+    <style>
+	img{
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius:2px;
+    }
+    </style>
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://www.baidu.com/">工大圈子</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li ><a href="{% url 'home' %}">新闻和课程</a></li>
+            <li class="active"><a href="{% url 'friendt' username %}">好友</a></li>
+            <li><a href="{% url 'self_page' username %}">个人主页</a></li>
+          </ul>
+		  <form class="navbar-form navbar-right" role="form">
+          <img src="/img/{{ username }}_icon.jpg" width="25" height="25" />
+            <div class="form-group">
+            
+			  <a href="{% url 'userinfo' username=username %}">{{ username }}</a>
+              <!--input type="text" placeholder="账号" class="form-control"-->
+            </div>
+            
+            <!--div class="form-group">
+              <input type="password" placeholder="密码" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">登录</button-->
+			<a class="btn btn-link" href="{% url 'logout' %}">退出登录</a>
+          </form>
+        </div><!-- /.nav-collapse -->	
+      </div><!-- /.container -->
+    </div><!-- /.navbar -->
+
+    <div class="container">
+
+      <div class="row row-offcanvas row-offcanvas-right">
+
+        <div class="col-xs-12 col-sm-9">
+ 
+		  
+
+		  
+<!----------------------好友列表------------------------------->	
+	<div class="Left">
+		<h2 class="form-signin-heading">好友列表</h2>
+          <div class="list-group" position="fixed">
+            {% if mylist %}
+            {% for f in mylist %}
+            <p>
+            <a href="#" class="list-group-item">{{ f.username }}</a>
+            {% if f.ReqDir == 1 %}
+                <a href="{% url 'addfriendconfirm' username=username friendID=f.id %}" class="list-group-item">
+				&nbsp;&nbsp;&nbsp;&nbsp;同意</a>
+            {% else %}
+                {% if f.ReqDir == -1 %}
+                    <a href='#' class="list-group-item">&nbsp;&nbsp;&nbsp;&nbsp;等待对方确认</a>
+				{% else %}
+					<a href="{% url 'SendMesg' username=username friendID=f.id  %}" class="list-group-item">
+					&nbsp;&nbsp;&nbsp;&nbsp;私信</a>
+                {% endif %}
+            {% endif %}
+            </p>
+            {% endfor %}
+            {% endif %}
+          </div>
+	</div>
+<!----------------------好友消息------------------------------->
+<h2 class="form-signin-heading">未读消息</h2>
+{% if Info %}
+<div class="list-group">
+	{% for info in Info %}
+	<li>
+		<a href="#" class="list-group-item">{{ info.0.Time|date:"Y-m-d H:i:s"}}&nbsp;[{{ info.1.username }}]：{{ info.0.Content }}</a>
+		<a href="{% url 'SendMesg' username=username friendID=info.1.id %}" class="list-group-item">&nbsp;&nbsp;&nbsp;&nbsp;回复</a>
+        <a href="{% url 'MarkRead' info.0.id %}" class="list-group-item">&nbsp;&nbsp;&nbsp;&nbsp;标记为已读</a>
+	</li>
+	{% endfor %}
+</div>
+{% else %}
+<div class="list-group">
+<a href="#" class="list-group-item">无！</a>
+</div>
+{% endif %}
+<!----------------------推荐好友------------------------------->	
+	<div class="Right">
+		<h2 class="form-signin-heading">推荐好友</h2>
+          <div class="list-group">
+            <a href="file:///F:/software%20engineering/url.%E7%83%AD%E7%82%B9%E6%96%B0%E9%97%BB" class="list-group-item">好友1(点击查看)</a>
+					<li style="padding:4px;"><a type="button" class="btn btn-primary" href="#">添加好友</a></li>
+            <a href="file:///F:/software%20engineering/url.%E7%83%AD%E7%82%B9%E4%BA%BA%E7%89%A9" class="list-group-item">好友2(点击查看)</a>
+					<li style="padding:4px;"><a type="button" class="btn btn-primary" href="#">添加好友</a></li>
+			<a href="file:///F:/software%20engineering/url.%E7%83%AD%E7%82%B9%E4%BA%BA%E7%89%A9" class="list-group-item">好友3(点击查看)</a>
+					<li style="padding:4px;"><a type="button" class="btn btn-primary" href="#">添加好友</a></li>
+			<a href="file:///F:/software%20engineering/url.%E7%83%AD%E7%82%B9%E4%BA%BA%E7%89%A9" class="list-group-item">好友4(点击查看)</a>
+					<li style="padding:4px;"><a type="button" class="btn btn-primary" href="#">添加好友</a></li>
+			<a href="file:///F:/software%20engineering/url.%E7%83%AD%E7%82%B9%E4%BA%BA%E7%89%A9" class="list-group-item">好友5(点击查看)</a>
+					<li style="padding:4px;"><a type="button" class="btn btn-primary" href="#">添加好友</a></li>
+          </div>
+	</div>
+	
+<!----------------------查找及显示用户------------------------------->	
+	<div class="footer">
+      <form class="form-signin" method="get" action="">
+        <h2 class="form-signin-heading">查找添加好友</h2>
+        <input class="input-block-level" placeholder="输入要查找的id" type="text" name="SearchChar">
+        <button class="btn btn-large btn-primary" type="submit">查找</button>
+      </form>
+	</div>
+    <div>
+	    {% if HasSearch %}
+    {% if Results %}
+        <table>
+        {% for f in Results %}
+            {% ifequal f.username username %}
+            {% else %}
+            <tr>
+            <td>{{ f.username }}</td>
+            <td><a href = "#">进入主页</a></td>
+                {% if f in friends %}
+                <td>已经是好友了</td>
+                {% else %}
+                <td><a href = "{% url 'addfriend' username=username friendID=f.id %}">添加为好友</a></td>
+                {% endif %}
+            </tr>
+            {% endifequal %}
+        {% endfor %}
+        </table>
+    {% else %}
+    <h3>用户"{{ SearchChar }}"不存在!</h3>
+    {% endif %}
+    {% endif %}
+    </div>
+</div>
+</div>
+</div>
+
+
+
+
+      
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./登陆后主界面_files/jquery.min(1).js"></script>
+    <script src="./登陆后主界面_files/bootstrap.min(1).js"></script>
+    <script src="./登陆后主界面_files/offcanvas.js"></script>
+  
+
+</body></html>

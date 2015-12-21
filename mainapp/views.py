@@ -29,33 +29,38 @@ REQ_AGREED = 0
 def hello(request):
     return TR(request, "sign_in&up.html")
 
-
-
-def index(request):
-    requesth = urllib2.Request("http://today.hit.edu.cn/phb/0.htm")
-    response = urllib2.urlopen(requesth)
-
-    selector=etree.HTML(response.read().decode('gb2312'))
-
-    title=selector.xpath("//div[@class='charbox_content']/ol/li/a/text()")
-    time=selector.xpath("//div[@class='charbox_content']/ol/li/text()")
-    recommend_index=selector.xpath("//div[@class='charbox_content']/ol/li/span/text()")
-    source_url=selector.xpath("//div[@class='charbox_content']/ol/li/a/@href")
-    add_news=[]
-    for i in range(0,11):
-        addnews=News(source_url=source_url[i],title=title[i],time=time[i],recommend_index=recommend_index[i])
-        add_news.append(addnews)
- 
-
-    if request.session:
-        print '---------------------session runs--------------------'
+def index(request, username):
     if 'username' in request.session:
-        print '----------------------succeed------------------------'
-        return render(request, 'loginlater.html', {'username': request.session['username'],"b1":add_news[5],"b2":add_news[6],"b3":add_news[7],"b4":add_news[8],"b5":add_news[9],"b0":add_news[10]})
-    
-    con={"b0":add_news[0],"b1":add_news[1],"b2":add_news[2],"b3":add_news[3],"b4":add_news[4],"b5":add_news[5]}
-    return TR(request,"index.html",con)
-    
+        requesth = urllib2.Request("http://today.hit.edu.cn/phb/0.htm")
+        response = urllib2.urlopen(requesth)
+
+        selector=etree.HTML(response.read().decode('gb2312'))
+
+        title=selector.xpath("//div[@class='charbox_content']/ol/li/a/text()")
+        time=selector.xpath("//div[@class='charbox_content']/ol/li/text()")
+        recommend_index=selector.xpath("//div[@class='charbox_content']/ol/li/span/text()")
+        source_url=selector.xpath("//div[@class='charbox_content']/ol/li/a/@href")
+        add_news=[]
+        add_news_base=[]
+        all_news=News.objects.all()	
+        for i in range(11):
+            addnews=News(source_url=source_url[i],title=title[i],time=time[i],recommend_index=recommend_index[i])
+            flag=False
+            for j in range(len(all_news)):
+                if addnews.title==all_news[j].title:
+                    flag=True
+                    break
+            if flag==False:
+                addnews.save()
+            add_news.append(addnews)
+
+        all_news=News.objects.all()
+        if all_news == None:
+            for i in range(len(add_news)):       
+                add_news[i].save()
+        return render(request, 'loginlater.html', {'username': username,"b0":add_news[0],\
+		"b1":add_news[1],"b2":add_news[2],"b3":add_news[3],"b4":add_news[4],"b5":add_news[5]}, \
+                context_instance=RequestContext(request))
 #-----------------------------------------------
 #激活码计算:邮箱+当前时间
 def active_code(email):
@@ -151,8 +156,6 @@ def signup(request):
     return render(request, 'sign_in&up.html', {'error': error}, \
         context_instance=RequestContext(request))
 
-
-
 def login(request):
     wrong = ''
     requesth = urllib2.Request("http://today.hit.edu.cn/phb/0.htm")
@@ -165,9 +168,25 @@ def login(request):
     recommend_index=selector.xpath("//div[@class='charbox_content']/ol/li/span/text()")
     source_url=selector.xpath("//div[@class='charbox_content']/ol/li/a/@href")
     add_news=[]
-    for i in range(5,11):
+    add_news_base=[]
+    all_news=News.objects.all()	
+    for i in range(11):
 	addnews=News(source_url=source_url[i],title=title[i],time=time[i],recommend_index=recommend_index[i])
+	flag=False
+	for j in range(len(all_news)):
+	    if addnews.title==all_news[j].title:
+		flag=True
+		break
+	if flag==False:
+	    addnews.save()
 	add_news.append(addnews)
+
+    all_news=News.objects.all()	
+    if all_news == None:
+        for i in range(len(add_news)):       
+            add_news[i].save()	
+        
+
     if request.method == 'POST':
         p = request.POST
         user = User.objects.filter(username = p['username'])
@@ -181,9 +200,9 @@ def login(request):
             request.session['username'] = p['username']
             #print '---------------------create session------------------'
             return render(request, 'loginlater.html', {'username': p['username'],"b0":add_news[0],\
-                "b1":add_news[1],"b2":add_news[2],"b3":add_news[3],"b4":add_news[4],"b5":add_news[5]}, \
+		"b1":add_news[1],"b2":add_news[2],"b3":add_news[3],"b4":add_news[4],"b5":add_news[5]}, \
                 context_instance=RequestContext(request))
-    return render(request, 'sign_in&up.html', {'tip': wrong}, \
+    return render(request, 'sign_in&up.html', {'tip': wrong},\
         context_instance=RequestContext(request)) 
 
     
@@ -197,15 +216,21 @@ def logout(request):
     home = '/'
     return HttpResponseRedirect(home)
 
-def news_page(requestl):
-    url=requestl.GET['url']
+def news_page(requestl,username,url):
+    if not 'username' in requestl.session:
+        raise Http404
+    user = User.objects.filter(username = username)
+    if not user:
+        raise Http404
+    view_news=News.objects.filter(source_url=url)[0]
+    replays = NewsComment.objects.filter(Newsinfo=view_news)
     realurl='http://today.hit.edu.cn'+ url
     request = urllib2.Request(realurl)
     response = urllib2.urlopen(request)
     selector=etree.HTML(response.read().decode('gbk'))
     contents=selector.xpath("//div[@id='page_main']")
     info=contents[0].xpath('string(.)')   
-    return TR(requestl,"新闻页.html",{"info":info}) 
+    return TR(requestl,"新闻页test.html",{"view_news":view_news,"info":info,"username":username,"replays":replays}) 
 
 def self_page(request,username):
     if not 'username' in request.session:
@@ -220,12 +245,16 @@ def self_page(request,username):
  
     return TR(request,"self_page.html",{'username':username,'news':news})
 
-def self_pagehehe(request):
-    newsadd=request.GET['new']
-    username=request.GET['username']
-    userzu=User.objects.filter(username = username)
+def self_pagehehe(request,username,url):
+    if not 'username' in request.session:
+        raise Http404
+    userzu = User.objects.filter(username = username)
+    if not userzu:
+        raise Http404
     user=userzu[0]
-    newnews=ForwardNews(user=user,title=newsadd)
+    the_news=News.objects.filter(source_url=url)[0]
+    
+    newnews=ForwardNews(user=user,title=the_news.title,url=the_news.source_url,time=the_news.time)
     newnews.save()  #应该是这个model的url和time不能为空
     news = ForwardNews.objects.filter(user = user)
  
@@ -408,3 +437,33 @@ def UserInfo(request, username):
     return render(request, 'info.html', {'myself': myself[0],\
         'tip': tip, 'username': username},\
         context_instance=RequestContext(request))
+        
+def replays(req): 
+    username=req.GET['userna']
+    news_id=req.GET['news_id']
+    if not 'username' in req.session:
+        raise Http404
+    user = User.objects.filter(username = username)
+    if not user:
+        raise Http404
+    user = user[0] 
+    content=req.GET['content']    
+    if content:
+		com_news=News.objects.filter(id=news_id)[0]      
+		add_news=NewsComment(Newsinfo=com_news,user=user,content=content)#将评论写进数据库 
+		add_news.save()
+		#return  HttpResponse(json.dumps({"content":content}))
+    replays = NewsComment.objects.filter(Newsinfo=com_news)#一条新闻的所有评
+    url=com_news.source_url
+    realurl='http://today.hit.edu.cn'+ url
+    request = urllib2.Request(realurl)
+    response = urllib2.urlopen(request)
+    selector=etree.HTML(response.read().decode('gbk'))
+    contents=selector.xpath("//div[@id='page_main']")
+    info=contents[0].xpath('string(.)')   
+    return render_to_response('新闻页test.html',{
+		'replays':replays,
+		'username':username,
+		'view_news':com_news,
+		'info':info,
+		    },context_instance=RequestContext(req))

@@ -29,6 +29,8 @@ class InterestTribeAdmin(admin.ModelAdmin):
 class SendMesgAdmin(admin.ModelAdmin):
 	list_display = ('userFrom', 'userTo', 'Time')
 	
+class NewsCommentAdmin(admin.ModelAdmin):
+	list_display = ('content', 'time')
 admin.site.register(User, UserAdmin)
 admin.site.register(Friends, FriendsAdmin)
 admin.site.register(ForwardNews, ForwardNewsAdmin)
@@ -36,5 +38,6 @@ admin.site.register(ForwardNewsComment, ForwardNewsCommentAdmin)
 admin.site.register(ReleaseMesg, ReleaseMesgAdmin)
 admin.site.register(ReleaseMesgComment, ReleaseMesgCommentAdmin)
 admin.site.register(News, NewsAdmin)
+admin.site.register(NewsComment, NewsCommentAdmin)
 admin.site.register(InterestTribe, InterestTribeAdmin)
 admin.site.register(SendMesg, SendMesgAdmin)
