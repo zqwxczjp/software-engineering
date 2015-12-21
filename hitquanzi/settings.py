@@ -112,8 +112,8 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "template"),
     os.path.join(BASE_DIR, "bookapp/static/admin"),
 )
-#CSS_DIR = './template/css'
-
+CSS_DIR = './template/css'
+IMG_DIR = './img'
 #Email config
 
 EMAIL_HOST = 'smtp.sina.com'                   #SMTP地址

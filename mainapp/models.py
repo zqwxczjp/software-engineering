@@ -12,8 +12,9 @@ class User(models.Model):
 	birthday = models.DateField(null = True, blank = True)	#生日
 	icon = models.ImageField(upload_to = "./img", null = True, blank = True)	#用户头像
 	degree = models.IntegerField(null = True, blank = True)	#等级
-	state = models.IntegerField(blank = True)   #默认值为-1, 设置为1表示激活，用户正常
+	state = models.IntegerField(blank = True, null = True)   #默认值为-1, 设置为1表示激活，用户正常
 	active_code = models.CharField(max_length = 200, null = True, blank = True)
+    
 	def __unicode__(self):
 		return self.username
 class Friends(models.Model):
@@ -80,7 +81,7 @@ class SendMesg(models.Model):
 	userFrom = models.IntegerField()
 	userTo = models.IntegerField()
 	Content = models.TextField()
-	Time = models.DateField(null = True, blank = True, auto_now_add = True)
+	Time = models.DateTimeField(null = True, blank = True, auto_now_add = True)
 	HasRead = models.BooleanField(default = False)
 	def __unicode__(self):
 		#str = '%s -> %s' % (self.userFrom.username, self.userTo.username)

@@ -1,0 +1,13 @@
+<html>
+<body>
+<form action="/upload_img/" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <p>
+        <input type="text" name="username">
+        <input type="text" name="passwd">
+        <input type="text" name="email">
+        <input type="file" class="" name="image">
+    </p>
+    <input type="submit" value="Submit" />
+</form>
+</body>
+</html>

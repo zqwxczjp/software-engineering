@@ -17,7 +17,7 @@ import urllib2
 import codecs
 from django.core.mail import send_mail, EmailMultiAlternatives 
 from mylib import AddFriendReq
-
+from PIL import Image
 PASSWD_MIN_LENGTH = 3
 AGE_DEFAULT = 0
 USER_STATE_DEFAULT = -1
@@ -25,6 +25,12 @@ USER_STATE_ACTIVE = 1
 REQ_DIR_L_R = -1
 REQ_DIR_R_L = 1
 REQ_AGREED = 0
+
+def hello(request):
+    return TR(request, "sign_in&up.html")
+
+
+
 def index(request):
     requesth = urllib2.Request("http://today.hit.edu.cn/phb/0.htm")
     response = urllib2.urlopen(requesth)
@@ -142,7 +148,7 @@ def signup(request):
                 
                 greeting = u'%s, 你好！注册成功~ 请尽快前往您的邮箱激活账户...' % p['username']  
                 return HttpResponse(greeting)   #后面跳转到登录后界面，这里先显示成功
-    return render(request, 'signup.html', {'error': error}, \
+    return render(request, 'sign_in&up.html', {'error': error}, \
         context_instance=RequestContext(request))
 
 
@@ -175,10 +181,9 @@ def login(request):
             request.session['username'] = p['username']
             #print '---------------------create session------------------'
             return render(request, 'loginlater.html', {'username': p['username'],"b0":add_news[0],\
-		"b1":add_news[1],"b2":add_news[2],"b3":add_news[3],"b4":add_news[4],"b5":add_news[5]}, \
+                "b1":add_news[1],"b2":add_news[2],"b3":add_news[3],"b4":add_news[4],"b5":add_news[5]}, \
                 context_instance=RequestContext(request))
-    return render(request, 'index.html', {'tip': wrong,"b0":add_news[0],\
-		"b1":add_news[1],"b2":add_news[2],"b3":add_news[3],"b4":add_news[4],"b5":add_news[5]}, \
+    return render(request, 'sign_in&up.html', {'tip': wrong}, \
         context_instance=RequestContext(request)) 
 
     
@@ -360,3 +365,46 @@ def MarkRead(request, mesgid):
     mesg.update(HasRead = True)
     urlstr = '/friend/%s' % User.objects.filter(id=mesg[0].userTo)[0].username
     return HttpResponseRedirect(urlstr)
+    
+def UploadImg(request):
+    if request.method == 'POST':
+        rp = request.POST
+        imgfile = request.FILES['image']
+        try:
+            img = Image.open(imgfile)
+            #img.thumbnail((200,200),Image.ANTIALIAS)
+            img = img.resize((200,200))
+            path = './img/%s_icon.jpg' % rp['username']#, time.strftime("%Y-%m-%d-%H-%M-%S", time.localtime()))
+            img.save(path, "jpeg")
+        except Exception, e:
+            return HttpResponse("Error: %s" % e)
+    return render(request, 'UploadImg.html',{},\
+        context_instance=RequestContext(request))
+        
+        
+def UserInfo(request, username):
+    if not 'username' in request.session:
+        raise Http404
+    tip = ''
+    myself = User.objects.filter(username=username)
+    if request.method == 'POST':
+        p = request.POST
+        myself.update(institute=p['institute'], major=p['major'], \
+            birthday=p['birthday'])
+        if request.FILES:
+            imgfile = request.FILES['icon']
+            try:
+                img = Image.open(imgfile)
+                #img.thumbnail((200,200),Image.ANTIALIAS)
+                img = img.resize((200,200))
+                path = './img/%s_icon.jpg' % username#, time.strftime("%Y-%m-%d-%H-%M-%S", time.localtime()))
+                img.save(path, "jpeg")
+            except Exception, e:
+                return HttpResponse("Error: %s" % e)
+        urlx = 'http://localhost:8000/userinfo/%s/' % username
+        display = '修改成功！'
+        return TR(request, 'WaitInfo.html',\
+            {'urlx':urlx, 'display':display})
+    return render(request, 'info.html', {'myself': myself[0],\
+        'tip': tip, 'username': username},\
+        context_instance=RequestContext(request))

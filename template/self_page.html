@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="http://bootstrap.evget.com/assets/ico/favicon.ico">
 
-    <title>工大圈子</title>
+    <title>个人主页</title>
 
     <!-- Bootstrap core CSS -->
     <link href="http://bootstrap.evget.com/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -19,7 +19,13 @@
 	<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
 	<script src="./登陆后主界面_files/jquery.min.js"></script>
 	<script src="./登陆后主界面_files/bootstrap.min.js"></script>
-	
+	    <style>
+	img{
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius:2px;
+    }
+    </style>
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -50,15 +56,17 @@
             <li class="active"><a href="{% url 'self_page' username %}">个人主页</a></li>
           </ul>
 		  <form class="navbar-form navbar-right" role="form">
+          <img src="/img/{{ username }}_icon.jpg" width="25" height="25" />
             <div class="form-group">
-			  你好，<a href="./登陆后主界面_files/登陆后主界面.html">{{ username }}账号</a>
+			  <a href="{% url 'userinfo' username=username %}">{{ username }}</a>
               <!--input type="text" placeholder="账号" class="form-control"-->
+              <a class="btn btn-link" href="{% url 'logout' %}">退出登录</a>
             </div>
-            <!--div class="form-group">
-              <input type="password" placeholder="密码" class="form-control">
+            
+            
             </div>
-            <button type="submit" class="btn btn-success">登录</button-->
-			<a class="btn btn-link" href="{% url 'logout' %}">退出登录</a>
+           
+			
           </form>
         </div><!-- /.nav-collapse -->	
       </div><!-- /.container -->
@@ -87,16 +95,13 @@
           </div>
         </div><!--/span-->
 
+</div>
+</div>
+</div>
 
 
 
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="./登陆后主界面_files/jquery.min(1).js"></script>
-    <script src="./登陆后主界面_files/bootstrap.min(1).js"></script>
-    <script src="./登陆后主界面_files/offcanvas.js"></script>
   
 
 </body></html>

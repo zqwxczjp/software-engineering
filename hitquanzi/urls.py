@@ -20,6 +20,7 @@ from mainapp.views import *
 import settings
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', hello, name = 'hello'),
     url(r'^$', index, name = 'home'),
     url(r'^signup/$', signup, name = 'signup'), #注册
     url(r'^login/$', login),
@@ -35,6 +36,10 @@ urlpatterns = [
 		addfriendconfirm, name = 'addfriendconfirm'),
 	url(r'^sendmesg/(?P<username>[a-zA-Z0-9_]{3,50})/(?P<friendID>\d+)/$', SendMesgx, name = 'SendMesg'),
     url(r'^markread/(?P<mesgid>\d+)/$', MarkRead, name = 'MarkRead'),
-    #url(r'^css/(?P<path>.*)', 'django.views.static.serve',
-    #    {'document_root': settings.CSS_DIR}),
+    url(r'^upload_img/$', UploadImg, name = 'upload_img'),
+    url(r'^userinfo/(?P<username>[a-zA-Z0-9_]{3,50})/$', UserInfo, name = 'userinfo'),
+    url(r'^css/(?P<path>.*)', 'django.views.static.serve',\
+        {'document_root': settings.CSS_DIR}),
+    url(r'^img/(?P<path>.*)', 'django.views.static.serve',\
+        {'document_root': settings.IMG_DIR}),
 ]

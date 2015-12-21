@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>super_god</title> 
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+{% load staticfiles %}
+<script type="text/javascript" src="/css/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="/css/login.js"></script>
+<link href="/css/login2.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>工大圈子</h1>
+
+<div class="login" style="margin-top:50px;">
+    
+    <div class="header">
+        <div class="switch" id="switch"><a class="switch_btn_focus" id="switch_qlogin" href="javascript:void(0);" tabindex="7">快速登录</a>
+			<a class="switch_btn" id="switch_login" href="javascript:void(0);" tabindex="8">快速注册</a><div class="switch_bottom" id="switch_bottom" style="position: absolute; width: 64px; left: 0px;"></div>
+        </div>
+    </div>    
+  
+    
+    <div class="web_qr_login" id="web_qr_login" style="display: block; height: 235px;">    
+
+            <!--登录-->
+            <div class="web_login" id="web_login">
+               
+               
+               <div class="login-box">
+    
+            
+			<div class="login_form">
+				<form action="/login/" name="loginform" accept-charset="utf-8" id="login_form" class="loginForm" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="did" value="0"/>
+               <input type="hidden" name="to" value="log"/>
+                {% if tip %}
+                 <p align="center">{{ tip }}</p>
+                 {% endif %}
+                <div class="uinArea" id="uinArea">
+                    <label class="input-tips" for="u">帐号：</label>
+                    <div class="inputOuter" id="uArea">
+                <input type="text" id="u" name="username" class="inputstyle"/>
+                </div>
+                </div>
+                
+                <div class="pwdArea" id="pwdArea">
+                   <label class="input-tips" for="p">密码：</label> 
+                   <div class="inputOuter" id="pArea">
+                        
+                        <input type="password" id="p" name="password" class="inputstyle"/>
+                    </div>
+                </div>
+               
+                <div style="padding-left:50px;margin-top:20px;">
+                <input type="submit" value="登 录" style="width:150px;" class="button_blue"/></div>
+              </form>
+           </div>
+           
+            	</div>
+               
+            </div>
+            <!--登录end-->
+  </div>
+
+  <!--注册-->
+    <div class="qlogin" id="qlogin" style="display: none; ">
+   
+    <div class="web_login">
+        <form name="form2" id="regUser" accept-charset="utf-8"  action="/signup/" method="post">
+        {% csrf_token %}
+	      <input type="hidden" name="to" value="reg"/>
+          <input type="hidden" name="did" value="0"/>
+            <ul class="reg_form" id="reg-ul">
+                    {% if error %}
+                    <div id="userCue" class="cue">警告:{{ error }}</div>
+                    {% else %}
+                    <div id="userCue" class="cue">请按照如下信息填写</div>
+                    {% endif %}
+        		
+                <li>
+                    <label for="user"  class="input-tips2">用户名：</label>
+                    <div class="inputOuter2">
+                        <input type="text" id="user" name="username" placeholder="*用户名" maxlength="100" class="inputstyle2"/>
+                    </div>
+                    
+                </li>
+				
+				<li>
+                	
+                    <label for="email" class="input-tips2">邮箱：</label>
+                    <div class="inputOuter2">
+                        <input type="text" id="email" name="email" placeholder="*邮箱" maxlength="100" class="inputstyle2"/>
+                    </div>
+                    
+                </li>
+                
+                <li>
+                <label for="passwd" class="input-tips2">密码：</label>
+                    <div class="inputOuter2">
+                        <input type="password" id="passwd"  name="password" placeholder="*密码" maxlength="16" class="inputstyle2"/>
+                    </div>
+                    
+                </li>
+                <li>
+                <label for="passwd2" class="input-tips2">确认密码：</label>
+                    <div class="inputOuter2">
+                        <input type="password" id="passwd2" name="password_confirm" placeholder="*确认密码" maxlength="16" class="inputstyle2" />
+                    </div>
+                    
+                </li>
+                
+                <li>
+                 <label class="input-tips2">年龄：</label>
+                    <div class="inputOuter2">
+                       
+                        <input type="text" name="age" placeholder="年龄" maxlength="10" class="inputstyle2"/>
+                    </div>
+                   
+                </li>
+				
+				<li>
+                 <label for="institute" class="input-tips2">学院：</label>
+                    <div class="inputOuter2">
+                       
+                        <input type="text" name="institute" placeholder="学院" maxlength="50" class="inputstyle2"/>
+                    </div>
+                   
+                </li>
+				
+				<li>
+                 <label class="input-tips2">专业：</label>
+                    <div class="inputOuter2">
+                       
+                        <input type="text" name="major" placeholder="专业" maxlength="50" class="inputstyle2"/>
+                    </div>
+                   
+                </li>
+				
+				<li>
+                 <label class="input-tips2">学号：</label>
+                    <div class="inputOuter2">
+                       
+                        <input type="text" name='studentid' placeholder="学号" maxlength="20" class="inputstyle2"/>
+                    </div>
+                   
+                </li>
+                
+                <li>
+                    <div>
+                        <input type="button" id="reg"  style="margin-top:10px;margin-left:85px;" class="button_blue" type = "submit" value="注 册"/> 
+                    </div>
+                    
+                </li><div class="cl"></div>
+            </ul></form>
+           
+    
+    </div>
+   
+    
+    </div>
+    <!--注册end-->
+</div>
+<div class="jianyi">*推荐使用ie8或以上版本ie浏览器或Chrome内核浏览器访问本站</div>
+<div class="jianyi">哈尔滨工业大学 super_god</div>
+</body></html>
