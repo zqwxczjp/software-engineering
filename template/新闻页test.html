@@ -72,7 +72,7 @@
 			<pre>{{info}}</pre>
 		</div>
 	</div>
-<div id = "comm">
+
     <ul class = 'con'>
 	{%if replays %}
         {% for replay in replays %}
@@ -80,18 +80,18 @@
             <div class='contents'> 
             <div class='name'>
                <h3>评论用户 {{replay.user}}</h3></br>
-</div>
+            </div>
 
    <pre> 评论内容：{{ replay.content }}</pre>
 
-</div></div></div> 
+</div></div> 
 	
         {% endfor %}
 	{%else%}
 	<h3>当前还没有人评论这篇新闻哦，赶紧抢个沙发吧！</h3>
 	{%endif%}
     </ul>
-</div>		
+	
 
  <form action="/replays/" id="user_content" method = 'GET'>
     <textarea cols="100" id="id_content" name="content" rows="10"></textarea>

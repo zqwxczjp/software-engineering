@@ -84,47 +84,47 @@
 		  
           <div class="row">
             <div class="col-6 col-sm-6 col-lg-4">
-              <h3>{{b0.title}}</h3>
-             <p> {{b0.recommend_index}} </p>
-            <p>  <a class="btn btn-default" href="{% url 'news_paget' username=username url=b0.source_url %}" role="button">查看具体的新闻内容</a>
-	      <a class="btn btn-default" href="{% url 'self_pagehehe' username=username url=b0.source_url %}" role="button">转发</a></p>
+              <h3>{{b0.Title}}</h3>
+              <p>{{b0.Teacher}}---{{b0.School}} </p>
+              <p><a class="btn btn-default" href="{{b0.Url}}" role="button">查看课程的具体内容</a>
+	     <a class="btn btn-default" href="{% url "forwardcourse" username=username url=b0.Url %}" role="button">转发</a></p>
             </div><!--/span-->
             <div class="col-6 col-sm-6 col-lg-4">
-              <h3>{{b1.title}}</h3>
-              <p>{{b1.recommend_index}} </p>
-              <p><a class="btn btn-default" href="{% url 'news_paget' username=username url=b1.source_url %}">查看具体的新闻内容</a>
-	      <a class="btn btn-default" href="{% url 'self_pagehehe' username=username url=b1.source_url %}" role="button">转发</a></p>
+              <h3>{{b1.Title}}</h3>
+              <p>{{b1.Teacher}}---{{b1.School}} </p>
+              <p><a class="btn btn-default" href="{{b1.Url}}">查看课程的具体内容</a>
+	      <a class="btn btn-default" href="{% url "forwardcourse" username=username url=b1.Url %}" role="button">转发</a></p>
             </div><!--/span-->
             <div class="col-6 col-sm-6 col-lg-4">
-              <h3>{{b2.title}}</h3>
-              <p>{{b2.recommend_index}}  </p>
-              <p><a class="btn btn-default" href="{% url 'news_paget' username=username url=b2.source_url %}">查看具体的新闻内容</a>
-	      <a class="btn btn-default" href="{% url 'self_pagehehe' username=username url=b2.source_url %}" role="button">转发</a></p>
+              <h3>{{b2.Title}}</h3>
+              <p>{{b2.Teacher}}---{{b2.School}} </p>
+              <p><a class="btn btn-default" href="{{b2.Url}}">查看课程的具体内容</a>
+	      <a class="btn btn-default" href="{% url "forwardcourse" username=username url=b2.Url %}" role="button">转发</a></p>
             </div><!--/span-->
             <div class="col-6 col-sm-6 col-lg-4">
-              <h3>{{b3.title}}</h3>
-              <p>{{b3.recommend_index}}  </p>
-              <p><a class="btn btn-default" href="{% url 'news_paget' username=username url=b3.source_url %}" role="button">查看具体的新闻内容</a>
-              <a class="btn btn-default" href="{% url 'self_pagehehe' username=username url=b3.source_url %}" role="button">转发</a></p>
+              <h3>{{b3.Title}}</h3>
+              <p>{{b3.Teacher}}---{{b3.School}} </p>
+              <p><a class="btn btn-default" href="{{b3.Url}}" role="button">查看课程的具体内容</a>
+              <a class="btn btn-default" href="{% url "forwardcourse" username=username url=b3.Url %}" role="button">转发</a></p>
             </div><!--/span-->
             <div class="col-6 col-sm-6 col-lg-4">
-              <h3>{{b4.title}}</h3>
-              <p>{{b4.recommend_index}}  </p>
-              <p><a class="btn btn-default" href="{% url 'news_paget' username=username url=b4.source_url %}" role="button">查看具体的新闻内容</a>
-	       <a class="btn btn-default" href="{% url 'self_pagehehe' username=username url=b4.source_url %}" role="button">转发</a></p>
+              <h3>{{b4.Title}}</h3>
+              <p>{{b4.Teacher}}---{{b4.School}} </p>
+              <p><a class="btn btn-default" href="{{b4.Url}}" role="button">查看课程的具体内容</a>
+	      <a class="btn btn-default" href="{% url "forwardcourse" username=username url=b4.Url %}" role="button">转发</a></p>
             </div><!--/span-->
             <div class="col-6 col-sm-6 col-lg-4">
-              <h3>{{b5.title}}</h3>
-              <p>{{b5.recommend_index}}  </p>
-              <p><a class="btn btn-default" href="{% url 'news_paget' username=username url=b5.source_url %}" role="button">查看具体的新闻内容</a>
-	      <a class="btn btn-default" href="{% url 'self_pagehehe' username=username url=b5.source_url %}" role="button">转发</a></p>
+              <h3>{{b5.Title}}</h3>
+              <p>{{b5.Teacher}}---{{b5.School}} </p>
+              <p><a class="btn btn-default" href="{{b5.Url}}" role="button">查看课程的具体内容</a>
+	      <a class="btn btn-default" href="{% url "forwardcourse" username=username url=b5.Url %}" role="button">转发</a></p>
             </div><!--/span-->
           </div><!--/row-->
         </div><!--/span-->
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
           <div class="list-group" position="fixed">
-            <a href="file:///F:/software%20engineering/url.%E7%83%AD%E7%82%B9%E6%96%B0%E9%97%BB" class="list-group-item active">热点新闻</a>
-            <a href="{% url "course" username %}" class="list-group-item">热点课程</a>
+            <a href="file:///F:/software%20engineering/url.%E7%83%AD%E7%82%B9%E6%96%B0%E9%97%BB" class="list-group-item ">热点新闻</a>
+            <a href="file:///F:/software%20engineering/url.%E7%83%AD%E7%82%B9%E4%BA%BA%E7%89%A9" class="list-group-item  active">热点课程</a>
           </div>
         </div><!--/span-->
       </div><!--/row-->

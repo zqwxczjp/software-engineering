@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<head>
+	<title>个人主页</title>
+	<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+	<link href="http://bootstrap.evget.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://bootstrap.evget.com/examples/offcanvas/offcanvas.css" rel="stylesheet">
+	<link rel="shortcut icon" href="http://bootstrap.evget.com/assets/ico/favicon.ico">
+    {% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="/css/personal.css">
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">工大圈子</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li ><a href="{% url 'home' username%}">新闻和课程</a></li>
+            <li ><a href="{% url 'friendt' username %}">好友</a></li>
+            <li class="active"><a href="{% url 'self_page' username %}">个人主页</a></li>
+          </ul>
+		  <form class="navbar-form navbar-right" role="form">
+            <div class="form-group">
+			  你好，<a href="./登陆后主界面_files/登陆后主界面.html">{{ username }}</a>
+              <!--input type="text" placeholder="账号" class="form-control"-->
+            </div>
+            <!--div class="form-group">
+              <input type="password" placeholder="密码" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">登录</button-->
+			<a class="btn btn-link" href="{% url 'logout' %}">退出登录</a>
+          </form>
+        </div><!-- /.nav-collapse -->	
+      </div><!-- /.container -->
+    </div><!-- /.navbar -->
+	
+	<div class="friend-content">
+	
+		<div id="personal-inf">
+			<div width="100" height="100">
+				<img src="/img/{{ username }}_icon.jpg" width="100" height="100"/>
+			</div>
+			<div>
+				<h4>{{username}}</h4>
+			</div>
+		</div>
+		
+		<div class="personal-sheet">
+			<div class="personal-title">
+				<h5><b>个人信息</b></h5>
+			</div>
+			
+			<div class="personal-context">
+				<table>
+					<tr>
+						<td class="class-size"><h4><b>邮箱</b></h4></td>
+						<td><h5>{{user.email}}</h5></td>
+					</tr>
+					<tr>
+						<td class="class-size"><h4><b>学院</b></h4></td>
+						<td><h5>{{user.institute}}</h5></td>
+					</tr>
+					<tr>
+						<td class="class-size"><h4><b>专业</b></h4></td>
+						<td><h5>{{user.major}}</h5></td>
+					</tr>
+					<tr>
+						<td class="class-size"><h4><b>生日</b></h4></td>
+						<td><h5>{{user.birthday|date:"Y-m-d"}}</h5></td>
+					</tr>
+				</table>
+			</div>
+			
+			<a href="#" id="rightsize">修改信息</a>
+		</div>
+		
+		<div class="henglakuang">
+			<ul id="myTab" class="nav nav-tabs">
+				<li>
+					<a href="/demo/bootstrap3-plugin-tab.htm#recommand_news" data-toggle="tab">转发新闻</a>
+				</li>
+				<li>
+					<a href="/demo/bootstrap3-plugin-tab.htm#friend_submit" data-toggle="tab">课程</a>
+				</li>
+			</ul>
+			
+<div id="myTabContent" class="tab-content">
+
+<div class="tab-pane fade" id="recommand_news">
+{% if news %}
+{% for f in news %}
+<div class="friend-request">
+	<div width="900" height="50">
+		<h4>{{ f.title }}</h4>
+		<a class="btn btn-link" href="{% url 'news_paget' username=username url=f.url %}" role="button">看看具体的新闻</a>
+	</div>	
+</div>
+{% endfor %}
+{% else %}
+<h3>用户"{{ SearchChar }}"还没有转发任何新闻哦</h3>
+{% endif %}
+
+
+                    
+                    
+	<div style="margin-left:250px">
+		<ul class="pagination">
+			<li><a href="#">&laquo;</a></li>
+			<li><a href="#">1</a></li>
+			<li><a href="#">2</a></li>
+			<li><a href="#">3</a></li>
+			<li><a href="#">4</a></li>
+			<li><a href="#">5</a></li>
+			<li><a href="#">&raquo;</a></li>
+		</ul>
+	</div>
+</div>
+<div class="tab-pane fade" id="friend_submit">
+
+{% if course %}
+{% for f in course %}                
+<div class="friend-request">
+	<div width="900" height="50">
+		<h4>{{ f.Title }}</h4>
+        <h5>{{ f.Teacher }}---{{ f.School }}</h5>
+		<a class="btn btn-link" href="{{f.Url}}" role="button">看看具体的课程</a>
+	</div>	
+</div>
+{% endfor %}
+{% else %}
+<h3>用户"{{ SearchChar }}"还没有转发任何课程哦</h3>
+{% endif %}
+					<div style="margin-left:250px">
+						<ul class="pagination">
+							<li><a href="#">&laquo;</a></li>
+							<li><a href="#">1</a></li>
+							<li><a href="#">2</a></li>
+							<li><a href="#">3</a></li>
+							<li><a href="#">4</a></li>
+							<li><a href="#">5</a></li>
+							<li><a href="#">&raquo;</a></li>
+						</ul>
+					</div>
+</div>
+			</div>
+		</div>
+	
+		<div class="friend-frame">
+			<div style="margin-left:10px; margin-bottom:25px; margin-top:20px;">
+				<h5><b>好友列表</b></h5>
+			</div>
+			
+			<div style="margin-left:25px;">
+				<a href="#"><img src="personalcss/3.jpg" width="80" height="80"></a>
+				<a href="#"><img src="personalcss/4.jpg" width="80" height="80"></a>
+				<a href="#"><img src="personalcss/5.jpg" width="80" height="80"></a>
+				<a href="#"><img src="personalcss/6.jpg" width="80" height="80"></a>
+				<a href="#"><img src="personalcss/7.jpg" width="80" height="80"></a>
+				<a href="#"><img src="personalcss/8.jpg" width="80" height="80"></a>
+				<a href="#"><img src="personalcss/9.jpg" width="80" height="80"></a>
+				<a href="#"><img src="personalcss/11.jpg" width="80" height="80"></a>
+				<a href="#"><img src="personalcss/12.jpg" width="80" height="80"></a>
+			</div>
+		</div>		
+	</div>
+	<div class="jianyi">哈尔滨工业大学 super_god</div>
+</body>
+
+</html>

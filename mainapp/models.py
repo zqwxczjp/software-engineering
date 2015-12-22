@@ -96,3 +96,18 @@ class SendMesg(models.Model):
 		#str = '%s -> %s' % (self.userFrom.username, self.userTo.username)
 		return self.Content
 	
+class Course(models.Model):
+    '推荐课程'
+    Title=models.TextField()
+    Url=models.URLField()
+    Picurl=models.URLField()
+    Teacher=models.TextField()
+    School=models.TextField()
+    def __unicode__(self):
+		return self.Title
+class ForwardCourse(models.Model):
+    courseinfo=models.ForeignKey(Course)
+    user = models.ForeignKey(User)#谁转发的
+    url = models.URLField( null = True)
+    def __unicode__(self):
+        return self.url    

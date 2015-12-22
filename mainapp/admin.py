@@ -31,6 +31,10 @@ class SendMesgAdmin(admin.ModelAdmin):
 	
 class NewsCommentAdmin(admin.ModelAdmin):
 	list_display = ('content', 'time')
+class CourseAdmin(admin.ModelAdmin):
+    list_display=('Title','Teacher')
+class ForwardCourseAdmin(admin.ModelAdmin):
+    list_display=('user','url')
 admin.site.register(User, UserAdmin)
 admin.site.register(Friends, FriendsAdmin)
 admin.site.register(ForwardNews, ForwardNewsAdmin)
@@ -41,3 +45,5 @@ admin.site.register(News, NewsAdmin)
 admin.site.register(NewsComment, NewsCommentAdmin)
 admin.site.register(InterestTribe, InterestTribeAdmin)
 admin.site.register(SendMesg, SendMesgAdmin)
+admin.site.register(Course,CourseAdmin)
+admin.site.register(ForwardCourse,ForwardCourseAdmin)

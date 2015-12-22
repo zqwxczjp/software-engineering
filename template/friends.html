@@ -20,6 +20,18 @@
     -webkit-border-radius: 2px;
     border-radius:2px;
     }
+    .mynav1{
+    width:100px;
+    height:200px;
+    float:left;}
+        .mynav2{
+    width:100px;
+    height:200px;
+    float:left;}
+        .mynav3{
+    width:100px;
+    height:200px;
+    float:right;}
 </style>
 <body>
 	<div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
@@ -57,16 +69,21 @@
 	
 	<div class="friend-content">
 	
-		<div id="personal-inf">
-			<div width="100" height="100">
+		<div class="personal-inf">
+			<div class="mynav1">
 				<img src="/img/{{ username }}_icon.jpg"  onerror="javascript:this.src='/img/default_icon.jpg';" width="80" height="80" alt="你还没有头像">
 			</div>
-			<div>
+            <div class="mynav2">
 				<h4>{{ username }}</h4>
 			</div>
+            <div class="mynav3">
+            <iframe name="sinaWeatherTool"   
+            src="http://weather.news.sina.com.cn/chajian/iframe/weatherStyle32.html?city=%E5%93%88%E5%B0%94%E6%BB%A8" 
+            width="200" height="200" marginwidth="0" marginheight="0" hspace="0" 
+            vspace="0" frameborder="0" scrolling="no"></iframe>
+			</div>
 		</div>
-		
-		
+        
 		<div class="henglakuang">
 			<ul id="myTab" class="nav nav-tabs">
 				<li class="active">
@@ -160,9 +177,10 @@
 				</div>
 <div class="tab-pane fade" id="friend_request">
 {% if Info %}
-
+<table>
 	{% for info in Info %}
-    <div class="friend-request">
+    <tr><td>
+    <div  style="margin-bottom:50px;margin-top:25px; margin-left:50px;">
     <div width="200" height="50">
     		<h4>{{ info.1.username }}向你发送消息：</h4>
     		<h5>发送时间：{{ info.0.Time|date:"Y-m-d H:i:s"}}</h5>
@@ -170,19 +188,19 @@
     <div width="900" height="100">
     	<p>内容：{{ info.0.Content }}</p>
     </div>
-    
     <a href="{% url 'SendMesg' username=username friendID=info.1.id %}" class="btn btn-info">回复</a>
     <a href="{% url 'MarkRead' info.0.id %}" class="btn btn-info">标记为已读</a>
     </div>
+    </td>
+    </tr>
 	{% endfor %}
+</table>
 {% else %}
 <div class="list-group">
 <a href="#" class="list-group-item">无！</a>
 </div>
 {% endif %}
 
-
-	
 <div style="margin-left:250px">
 		<ul class="pagination">
 			<li><a href="#">&laquo;</a></li>
@@ -221,7 +239,7 @@
 <div class="tab-pane fade" id="friend_ask">
 	<div class="friend-ask" style="margin-top:50px">
 		<form class="form-signin" method="get" action="">
-			<input class="input-block-level" placeholder="输入要查找的用户名(模糊查找)" type="text" name="SearchChar">
+			<input class="input-block-level" placeholder="输入要查找的用户名(模糊查找)" type="text" name="SearchChar" style="width:500px;height:34px;">
 			<button class="btn btn-large btn-primary" type="submit">查找</button>
 		</form>
 	</div>
@@ -254,7 +272,7 @@
 {% endif %}
 </div>
                 
-                
+
 			</div>
 		</div>
 	</div>

@@ -62,6 +62,44 @@ def index(request, username):
 		"b1":add_news[1],"b2":add_news[2],"b3":add_news[3],"b4":add_news[4],"b5":add_news[5]}, \
                 context_instance=RequestContext(request))
 #-----------------------------------------------
+def course(req,username):
+    if not 'username' in req.session:
+        raise Http404
+    user = User.objects.filter(username = username)
+    if not user:
+        raise Http404
+    user = user[0]
+    requesth = urllib2.Request("http://www.icourses.cn/imooc/")
+    response = urllib2.urlopen(requesth)
+
+    selector=etree.HTML(response.read().decode('utf-8'))
+    title=selector.xpath("//a[@class='cour_link']/img/@title")
+    picurl=selector.xpath("//a[@class='cour_link']/img/@src")
+    url=selector.xpath("//a[@class='cour_link']/@href")
+    teacher=selector.xpath("//div[@class='cour_xx']/span/a[@class='cor_01b338 pad_5']/text()")
+    school=selector.xpath("//div[@class='cour_xx']/span/a[@class='cor_01b338']/text()")
+    add_course=[]
+    save_course=[]
+    all_course=Course.objects.all()
+    for i in range(len(title)):
+        addcourse=Course(Title=title[i],Url=url[i],Teacher=teacher[i],School=school[i],Picurl=picurl[i])
+        add_course.append(addcourse)
+        flag=False
+        for j in range(len(all_course)):
+            if addcourse.Title==all_course[j].Title:
+                flag=True
+                break
+        if flag==False:
+            save_course.append(addcourse)
+
+    for i in range(len(save_course)):       
+        save_course[i].save()    
+        urllib.urlretrieve(save_course[i].Picurl,'F:\djcode\software-engineering\mainapp\course_pic/%s.jpg' %save_course[i].Title) 
+    return render(req, 'course.html', {'username': username,"b0":add_course[0],\
+    "b1":add_course[1],"b2":add_course[2],"b3":add_course[3],"b4":add_course[4],"b5":add_course[5]}, \
+            context_instance=RequestContext(req))
+        
+    
 #激活码计算:邮箱+当前时间
 def active_code(email):
     email_code = uuid.uuid5(uuid.NAMESPACE_DNS, email+str(time.time())).hex
@@ -242,8 +280,11 @@ def self_page(request,username):
         raise Http404
     user = user[0]
     news = ForwardNews.objects.filter(user = user)
- 
-    return TR(request,"self_page.html",{'username':username,'news':news})
+    course = []
+    ForwardCourset = ForwardCourse.objects.filter(user = user)
+    for f in ForwardCourset:
+        course.append(f.courseinfo)
+    return TR(request,"personal.html",{'username':username,'news':news,'user':user,'course':course})
 
 def self_pagehehe(request,username,url):
     if not 'username' in request.session:
@@ -257,8 +298,11 @@ def self_pagehehe(request,username,url):
     newnews=ForwardNews(user=user,title=the_news.title,url=the_news.source_url,time=the_news.time)
     newnews.save()  #应该是这个model的url和time不能为空
     news = ForwardNews.objects.filter(user = user)
- 
-    return TR(request,"self_page.html",{'username':username,'news':news})
+    course = []
+    ForwardCourset = ForwardCourse.objects.filter(user = user)
+    for f in ForwardCourset:
+        course.append(f.courseinfo)
+    return TR(request,"personal.html",{'username':username,'news':news,'user':user,'course':course})
     
 
 def friend(request, username):
@@ -311,6 +355,7 @@ def friend(request, username):
         'HasSearch':HasSearch })
 
 def addfriend(request, username, friendID):
+    friendID = int(friendID)
     se = request.session
     FdName = ''
     if not 'username' in se:#没有登录
@@ -321,6 +366,8 @@ def addfriend(request, username, friendID):
     if user:
         user = user[0]
         ReqDir = 0
+        print (user.id, friendID)
+        print user.id > friendID
         if user.id > friendID:#前面存放id较小的
             smallID = friendID
             bigID = user.id
@@ -467,3 +514,23 @@ def replays(req):
 		'view_news':com_news,
 		'info':info,
 		    },context_instance=RequestContext(req))
+            
+            
+def forwardcourse(request, username, url):
+    if not 'username' in request.session:
+        raise Http404
+    userzu = User.objects.filter(username = username)
+    if not userzu:
+        raise Http404
+    user=userzu[0]
+    the_course=Course.objects.filter(Url=url)[0]
+    news = ForwardNews.objects.filter(user = user)
+    newcourses=ForwardCourse(user=user,courseinfo=the_course,url=url)
+    newcourses.save()  #应该是这个model的u5rl和time不能为空
+    course = []
+    ForwardCourset = ForwardCourse.objects.filter(user = user)
+    for f in ForwardCourset:
+        course.append(f.courseinfo)
+    print "----------forwardcourse-------6--------"
+    print course
+    return TR(request,"personal.html",{'username':username,'news':news,"course":course,"user":user})

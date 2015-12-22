@@ -27,7 +27,8 @@ urlpatterns = [
     url(r'^logout/$', logout, name = 'logout'),
     url(r'^email/$', email),    #just a test
     url(r'^news_page/$', news_page),
-    url(r'^self_pagehehe/$', self_pagehehe),  
+    url(r'^self_pagehehe/$', self_pagehehe),
+    url(r'^course/(?P<username>[a-zA-Z0-9_]{3,50})/$', course, name = 'course'),
     url(r'^news_page/(?P<username>[a-zA-Z0-9_]{3,50})/(?P<url>.+)$', news_page,name='news_paget'),
     url(r'^self_pagehehe/(?P<username>[a-zA-Z0-9_]{3,50})/(?P<url>.+)$', self_pagehehe,name="self_pagehehe"), 
     url(r'^replays/$', replays),
@@ -45,4 +46,5 @@ urlpatterns = [
         {'document_root': settings.CSS_DIR}),
     url(r'^img/(?P<path>.*)', 'django.views.static.serve',\
         {'document_root': settings.IMG_DIR}),
+    url(r'^forwardcourse/(?P<username>[a-zA-Z0-9_]{3,50})/(?P<url>.+)$', forwardcourse,name="forwardcourse"), 
 ]
