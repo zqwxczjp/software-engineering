@@ -26,9 +26,33 @@ SECRET_KEY = 'i==$75mhe^g7o$aq5)mg-pbyx&@spd5&_fh)(g5lc(p(3!95lu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+DEFAULT_FILE_STORAGE = 'sae.ext.django.storage.backend.Storage'
+# 使用media这个bucket
+STORAGE_BUCKET_NAME = 'cache'
 
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))  
+import os.path   
+from os import environ  
+debug = not environ.get("hitquanzi", "")   
+if debug:  
+#LOCAL 本地调试用，便于导出数据库,根据本地MYSQL数据库填写下面参数<----------------如果文件中出现中文，一定要在开始添加 #coding:utf-8  
+    MYSQL_DB = 'hithub'      
+    MYSQL_USER = 'root'   
+    MYSQL_PASS = '1026'   
+    MYSQL_HOST_M = '127.0.0.1'   
+    MYSQL_HOST_S = '127.0.0.1'   
+    MYSQL_PORT = '3306'   
+else:   
+#SAE   
+    import sae.const   
+    MYSQL_DB = sae.const.MYSQL_DB   
+    MYSQL_USER = sae.const.MYSQL_USER   
+    MYSQL_PASS = sae.const.MYSQL_PASS   
+    MYSQL_HOST_M = sae.const.MYSQL_HOST   
+    MYSQL_HOST_S = sae.const.MYSQL_HOST_S   
+    MYSQL_PORT = sae.const.MYSQL_PORT 
 # Application definition
 
 INSTALLED_APPS = (
@@ -76,15 +100,17 @@ WSGI_APPLICATION = 'hitquanzi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+DATABASES = {  
+    'default': {  
+        'ENGINE': 'django.db.backends.sqlite3',   
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        #'NAME': 'quanzi',
-        #'USER': 'root',
-        #'PASSWORD': '1026',
-    }
-}
+        #'NAME': MYSQL_DB,   
+        #'USER': MYSQL_USER,   
+        #'PASSWORD': MYSQL_PASS,   
+        #'HOST': MYSQL_HOST_M,   
+        #'PORT': MYSQL_PORT,   
+    }  
+}  
 
 
 # Internationalization

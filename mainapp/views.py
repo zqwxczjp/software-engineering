@@ -1,4 +1,4 @@
-#coding:utf-8
+ # -*-coding:UTF-8-*- 
 from django.shortcuts import render, RequestContext
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -18,6 +18,7 @@ import codecs
 from django.core.mail import send_mail, EmailMultiAlternatives 
 from mylib import AddFriendReq
 from PIL import Image
+import chardet
 PASSWD_MIN_LENGTH = 3
 AGE_DEFAULT = 0
 USER_STATE_DEFAULT = -1
@@ -207,17 +208,35 @@ def login(request):
     source_url=selector.xpath("//div[@class='charbox_content']/ol/li/a/@href")
     add_news=[]
     add_news_base=[]
-    all_news=News.objects.all()	
+    all_news=News.objects.all()
+    #-------------把编码方式全部转化成unicode--------------
+
+    # titlex = []
+    # for str in title:
+        # for char in str:
+            # t = char.encode('utf8')
+            # #t = t.encode('gb2312')
+            # print t
+            # chartype = chardet.detect(t)['encoding']
+            # print chartype
+            #t = t.encode(chartype)
+            #print t
+            #str[i] = str
+            
+    
+
+    #print str.encode('utf8')
+    #print chardet.detect(title[0][0])
     for i in range(11):
-	addnews=News(source_url=source_url[i],title=title[i],time=time[i],recommend_index=recommend_index[i])
-	flag=False
-	for j in range(len(all_news)):
-	    if addnews.title==all_news[j].title:
-		flag=True
-		break
-	if flag==False:
-	    addnews.save()
-	add_news.append(addnews)
+        addnews=News(source_url=source_url[i],title=title[i],time=time[i],recommend_index=recommend_index[i])
+        flag=False
+        for j in range(len(all_news)):
+            if addnews.title==all_news[j].title:
+                flag=True
+                break
+        if flag==False:
+            addnews.save()
+        add_news.append(addnews)
 
     all_news=News.objects.all()	
     if all_news == None:
